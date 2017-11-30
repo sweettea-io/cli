@@ -1,6 +1,7 @@
 import click
+from tensorci import log
 
 
 @click.command()
 def init():
-  click.echo('Heard init...')
+  log('Heard init...')

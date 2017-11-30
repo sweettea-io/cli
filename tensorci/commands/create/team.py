@@ -1,7 +1,8 @@
 import click
+from tensorci import log
 
 
 @click.command()
 @click.argument('name')
 def team(name):
-  click.echo('Creating team {}...'.format(name))
+  log('Creating team {}...'.format(name))

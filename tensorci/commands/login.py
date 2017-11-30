@@ -1,6 +1,7 @@
 import click
+from tensorci import log
 
 
 @click.command()
 def login():
-  click.echo('Logging in...')
+  log('Logging in...')

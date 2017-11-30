@@ -1,6 +1,7 @@
 import click
+from tensorci import log
 
 
 @click.command()
 def push():
-  click.echo('Heard push...')
+  log('Heard push...')
