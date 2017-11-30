@@ -8,6 +8,13 @@ from slugify import slugify
 @click.command()
 @click.argument('name')
 def team(name):
+  """
+  Create TensorCI team with a unique name.
+  Switches current team to this new team upon successful creation.
+
+  :param name: str (required)
+  :return: None
+  """
   auth_required()
 
   try:
