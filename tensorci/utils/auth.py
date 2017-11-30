@@ -1,6 +1,6 @@
 from tinynetrc import Netrc
 from tensorci.definitions import auth_header_name
-from tensorci import config
+from tensorci.config import config
 
 
 def login(email=None, password=None):

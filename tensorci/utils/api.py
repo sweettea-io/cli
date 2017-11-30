@@ -1,6 +1,6 @@
 import os
 from abstract_api import AbstractApi, ApiException
-from tensorci import config
+from tensorci.config import confgi
 from tensorci.definitions import auth_header_name
 
 api = AbstractApi(base_url=config.API_URL,
