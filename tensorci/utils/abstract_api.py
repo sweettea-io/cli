@@ -31,8 +31,7 @@ class AbstractApi(object):
   def delete(self, route, **kwargs):
     return self.make_request('delete', route, **kwargs)
 
-  def make_request(self, method, route, payload=None, headers=None,
-                   return_headers=False, err_message='Abstract API Response Error'):
+  def make_request(self, method, route, payload=None, headers=None, return_headers=False):
 
     # Get the proper method (get, post, put, or delete)
     request = getattr(requests, method)
@@ -69,13 +68,13 @@ class AbstractApi(object):
     return self.handle_response(response, return_headers, err_message)
 
   @staticmethod
-  def handle_response(response, return_headers, err_message):
+  def handle_response(response, return_headers):
     try:
       json = response.json() or {}
     except:
       json = {}
 
-    if response.status_code == requests.codes.ok:
+    if response.status_code == requests.codes.ok and json.get('ok'):
       if return_headers:
         return json, response.headers
 
