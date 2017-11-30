@@ -14,7 +14,8 @@ def current_team():
   curr_team = auth.get_team()
 
   if not curr_team:
-    log("No team is currently in use. Use 'tensorci use-team NAME' to set a team as the current team.")
+    log("No team is currently in use.\n"
+        "Use 'tensorci use-team NAME' to set one of your teams as the current team.")
     return
 
   log('Current team: {}'.format(curr_team))

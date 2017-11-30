@@ -25,7 +25,8 @@ def use_team(name):
     return
 
   if not teams:
-    log("You currently don't have any TensorCI teams to use.\nYou can create one with 'tensorci create team NAME'.")
+    log("You currently don't have any TensorCI teams to use.\n"
+        "You can create one with 'tensorci create team NAME'.")
     return
 
   team_slugs = [t.get('slug') for t in teams]
