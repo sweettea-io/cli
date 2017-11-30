@@ -8,6 +8,7 @@ from get import get
 
 all_cmds = [
   login,
+  logout,
   create,
   init,
   push,
