@@ -4,10 +4,11 @@ from tensorci import log
 
 class ApiException(BaseException):
 
-  def __init__(self, status=None, message=None, data=None):
+  def __init__(self, status=None, code=None, error=None):
     self.status = status
-    self.message = message
-    self.data = data
+    self.code = code
+    self.error = error
+    self.message = 'Request returned error: {}'.format(self.error)
 
 
 class AbstractApi(object):
@@ -30,7 +31,9 @@ class AbstractApi(object):
   def delete(self, route, **kwargs):
     return self.make_request('delete', route, **kwargs)
 
-  def make_request(self, method, route, payload=None, headers=None, err_message='Abstract API Response Error'):
+  def make_request(self, method, route, payload=None, headers=None,
+                   return_headers=False, err_message='Abstract API Response Error'):
+
     # Get the proper method (get, post, put, or delete)
     request = getattr(requests, method)
 
@@ -60,21 +63,24 @@ class AbstractApi(object):
       response = request(self.base_url + route, **args)
     except BaseException as e:
       log('Unknown Error while making request: {}'.format(e))
-      return
+      exit(1)
 
     # Return the JSON response
-    return self.handle_response(response, err_message)
+    return self.handle_response(response, return_headers, err_message)
 
   @staticmethod
-  def handle_response(response, err_message):
+  def handle_response(response, return_headers, err_message):
     try:
       json = response.json() or {}
     except:
       json = {}
 
     if response.status_code == requests.codes.ok:
+      if return_headers:
+        return json, response.headers
+
       return json
     else:
       raise ApiException(status=response.status_code,
-                                 message=err_message,
-                                 data=json)
+                         code=json.get('code'),
+                         error=json.get('error'))

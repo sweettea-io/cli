@@ -3,11 +3,11 @@ from tensorci.definitions import auth_header_name
 from tensorci.config import config
 
 
-def login(email=None, password=None):
+def create(email=None, password=None):
   netrc = Netrc()
 
   # delete old creds
-  logout(netrc)
+  delete(netrc)
 
   # upsert new creds
   netrc[config.DOMAIN]['login'] = email
@@ -17,7 +17,7 @@ def login(email=None, password=None):
   netrc.save()
 
 
-def logout(netrc=None):
+def delete(netrc=None):
   netrc = netrc or Netrc()
 
   if config.DOMAIN in netrc.keys():
