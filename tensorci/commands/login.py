@@ -11,7 +11,7 @@ from tensorci.definitions import auth_header_name
 def login(email, password):
   """
   Log in as a TensorCI user. Request responds with api token that can be used for
-  future authed requests to TensorCI api. Email and api token are stored in netrc file.
+  future authed requests to TensorCI API. Email and API token are stored in netrc file.
 
   :param email: str (required)
   :param password: str (required)
