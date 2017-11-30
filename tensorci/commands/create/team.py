@@ -28,4 +28,4 @@ def team(name):
   team_slug = slugify(name, separator='-', to_lower=True)
   auth.set_team(team_slug)
 
-  log('Switched current team to {}.'.format(name))
+  log('Set current team to {}.'.format(name))

@@ -27,7 +27,7 @@ def delete(netrc=None):
 
 def set_team(team):
   netrc = Netrc()
-  assert config.DOMAIN in netrc.keys()
+  assert config.DOMAIN in netrc.keys(), '{} not a host listed in ~/.netrc'.format(config.DOMAIN)
   netrc[config.DOMAIN]['account'] = team
   netrc.save()
 

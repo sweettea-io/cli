@@ -5,6 +5,7 @@ from init import init
 from push import push
 from use_team import use_team
 from get import get
+from current_team import current_team
 
 all_cmds = [
   login,
@@ -13,5 +14,6 @@ all_cmds = [
   init,
   push,
   use_team,
-  get
+  get,
+  current_team
 ]
