@@ -35,7 +35,7 @@ def push():
   try:
     resp = api.put('/prediction', payload=payload)
     data = resp.get('data') or {}
-  except ApiException:
+  except ApiException as e:
     log(e.message)
     return
 
