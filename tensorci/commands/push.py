@@ -34,12 +34,11 @@ def push():
 
   try:
     resp = api.put('/prediction', payload=payload)
-    data = resp.get('data') or {}
   except ApiException as e:
     log(e.message)
     return
 
-  if data.get('up_to_date'):
+  if resp.get('up_to_date'):
     log('Everything up to date.')
     return
 
