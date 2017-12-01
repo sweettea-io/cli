@@ -2,6 +2,7 @@ import yaml
 import os
 from collections import OrderedDict
 from config_key import ConfigKey
+from tensorci import log
 
 
 class ConfigFile(object):
@@ -60,8 +61,16 @@ class ConfigFile(object):
       yaml.dump(self.as_ordered_dict(), f, default_flow_style=False)
 
   def validate(self):
-    [v.validate() for v in self.config.values()]
+    invalid_keys = []
 
+    for k, v in self.config.items():
+      if not v.validate():
+        invalid_keys.append(k)
+
+    if invalid_keys:
+      log('Invalid config keys: {}'.format(', '.join(invalid_keys)))
+
+    return len(invalid_keys) == 0
 
 def setup_yaml():
   represent_dict_order = lambda self, data:  self.represent_mapping('tag:yaml.org,2002:map', data.items())

@@ -19,7 +19,7 @@ def use_team(name):
 
   try:
     resp = api.get('/teams')
-    teams = resp.get('teams')
+    teams = resp.get('data')
   except ApiException as e:
     log(e.message)
     return
