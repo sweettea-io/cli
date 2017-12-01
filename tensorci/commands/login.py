@@ -31,7 +31,7 @@ def login(email, password):
   payload = {'email': email, 'password': pw}
 
   try:
-    resp, headers = api.post('/login', payload=payload, return_headers=True)
+    resp, headers = api.post('/user/login', payload=payload, return_headers=True)
   except ApiException as e:
     log(e.message)
     return
