@@ -1,7 +1,8 @@
 from setuptools import setup, find_packages
+from tensorci.version import version
 
 setup(name='tensorci',
-      version='0.0.1',
+      version=version,
       description='TensorCI CLI',
       author='Ben Whittle',
       author_email='benwhittle31@gmail.com',
