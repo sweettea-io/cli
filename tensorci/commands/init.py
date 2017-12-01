@@ -9,14 +9,14 @@ from slugify import slugify
 @click.command()
 @click.option('--name', '-n')
 def init(name):
-  # auth_required()
-  #
-  # curr_team = auth.get_team()
-  #
-  # if not curr_team:
-  #   log("You must be actively using one of your teams before creating a new prediction.\n"
-  #       "Use 'tensorci use-team NAME' to set one of your teams as the current team.")
-  #   return
+  auth_required()
+
+  curr_team = auth.get_team()
+
+  if not curr_team:
+    log("You must be actively using one of your teams before creating a new prediction.\n"
+        "Use 'tensorci use-team NAME' to set one of your teams as the current team.")
+    return
 
   config = ConfigFile()
 
