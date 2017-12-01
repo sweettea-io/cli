@@ -18,7 +18,7 @@ def team(name):
   auth_required()
 
   try:
-    api.post('/team', {'name': name})
+    api.post('/team', payload={'name': name})
   except ApiException as e:
     log(e.message)
     return

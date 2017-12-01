@@ -74,7 +74,7 @@ class AbstractApi(object):
     except:
       json = {}
 
-    if response.status_code == requests.codes.ok and json.get('ok'):
+    if response.status_code in (200, 201):
       if return_headers:
         return json, response.headers
 

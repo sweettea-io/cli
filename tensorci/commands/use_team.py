@@ -1,6 +1,7 @@
 import click
 from tensorci import log, auth_required
 from tensorci.utils import auth
+from slugify import slugify
 from tensorci.utils.api import api, ApiException
 
 
@@ -8,7 +9,7 @@ from tensorci.utils.api import api, ApiException
 @click.argument('name')
 def use_team(name):
   """
-  Switches current team to desired team by name.
+  Switches current team to desired team by nasme.
 
   :param team: str (required)
   :return: None
