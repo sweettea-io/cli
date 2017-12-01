@@ -28,8 +28,8 @@ def push():
 
   payload = {
     'team_slug': curr_team,
-    'prediction_slug': config.name,
-    'git_repo': config.repo
+    'prediction_slug': config.name.value,
+    'git_repo': config.repo.value
   }
 
   try:

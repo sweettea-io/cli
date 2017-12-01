@@ -9,7 +9,14 @@ setup(name='tensorci',
       license='MIT',
       packages=find_packages(),
       include_package_data=True,
-      install_requires=['Click'],
+      install_requires=[
+        'click',
+        'awesome-slugify',
+        'requests',
+        'tinynetrc',
+        'pyyaml',
+        'gitpython'
+      ],
       entry_points='''
         [console_scripts]
         tensorci=tensorci.main:cli
