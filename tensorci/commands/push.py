@@ -15,7 +15,7 @@ def push():
   # Require current team to be specified
   if not curr_team:
     log("You must be actively using one of your teams before deploying a prediction.\n"
-        "Use 'tensorci use-team NAME' to set one of your teams as the current team.")
+        "Use 'tensorci use-team NAME' to set a team as your current team.")
     return
 
   # Load config file from disk into our ConfigFile model

@@ -15,7 +15,7 @@ def init(name):
 
   if not curr_team:
     log("You must be actively using one of your teams before creating a new prediction.\n"
-        "Use 'tensorci use-team NAME' to set one of your teams as the current team.")
+        "Use 'tensorci use-team NAME' to set a team as your current team.")
     return
 
   config = ConfigFile()
