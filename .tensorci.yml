@@ -1,0 +1,7 @@
+name: my-prediction
+repo: https://github.com/tensorci/cli.git
+model: path/to/model/file
+create_dataset: module1.module2:function
+train: module1.module2:function
+test: module1.module2:function
+predict: module1.module2:function

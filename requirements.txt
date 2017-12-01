@@ -3,3 +3,4 @@ awesome-slugify==1.6.5
 requests==2.18.4
 tinynetrc==1.1.0
 pyyaml==3.12
+gitpython==2.1.7

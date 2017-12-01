@@ -1,5 +1,7 @@
 import yaml
 import os
+from collections import OrderedDict
+from config_key import ConfigKey
 
 
 class ConfigFile(object):
@@ -28,6 +30,17 @@ class ConfigFile(object):
                      test=self.test,
                      predict=self.predict)
 
+  def as_ordered_dict(self):
+    d = OrderedDict()
+    d['name'] = self.name.value
+    d['repo'] = self.repo.value
+    d['model'] = self.model.value
+    d['create_dataset'] = self.create_dataset.value
+    d['train'] = self.train.value
+    d['test'] = self.test.value
+    d['predict'] = self.predict.value
+    return d
+
   def load(self):
     if not os.path.exists(self.path):
       return
@@ -36,15 +49,22 @@ class ConfigFile(object):
       file_config = yaml.load(f)
 
     for k, v in file_config.items():
-      if k in self.config:
-        self.config[k].set_value(v)
+      self.set_value(k, v)
 
-  def as_dict(self):
-    return {k: v.value for k, v in self.config.items()}
+  def set_value(self, key, val):
+    if key in self.config:
+      self.config[key].set_value(val)
 
   def save(self):
     with open(self.path, 'w+') as f:
-      f.write(yaml.dumps(self.as_dict()))
+      yaml.dump(self.as_ordered_dict(), f, default_flow_style=False)
 
   def validate(self):
     [v.validate() for v in self.config.values()]
+
+
+def setup_yaml():
+  represent_dict_order = lambda self, data:  self.represent_mapping('tag:yaml.org,2002:map', data.items())
+  yaml.add_representer(OrderedDict, represent_dict_order)
+
+setup_yaml()

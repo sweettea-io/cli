@@ -1,30 +1,52 @@
+import os
 import click
 from tensorci import log, auth_required
-from tensorci.utils import auth
+from tensorci.utils import auth, gitconfig
+from tensorci.proj_config.config_file import ConfigFile
+from slugify import slugify
 
 
 @click.command()
-# TODO: use --name as option and prompt for it. Then pull github repo from .git and fail if not a git project
-def init():
-  auth_required()
+@click.option('--name', '-n')
+def init(name):
+  # auth_required()
+  #
+  # curr_team = auth.get_team()
+  #
+  # if not curr_team:
+  #   log("You must be actively using one of your teams before creating a new prediction.\n"
+  #       "Use 'tensorci use-team NAME' to set one of your teams as the current team.")
+  #   return
 
-  curr_team = auth.get_team()
+  config = ConfigFile()
 
-  if not curr_team:
-    log("You must be actively using one of your teams before creating a new prediction.\n"
-        "Use 'tensorci use-team NAME' to set one of your teams as the current team.")
+  if os.path.exists(config.path):
+    log('Project already initialized.')
     return
 
-  pred_name = click.prompt('Prediction Name').strip()
+  name = (name or click.prompt('Prediction Name')).strip()
 
-  if not pred_name:
+  if not name:
     log('Prediction Name is required.')
     return
 
-  # if not git_repo:
-  #   log('Git Repo URL is required.')
-  #   return
+  git_repo, err = gitconfig.get_remote_url()
 
+  if err:
+    log(err)
+    return
 
+  name = slugify(name, separator='-', to_lower=True)
 
-  log('Heard init...')
+  config.set_value('name', name)
+  config.set_value('repo', git_repo)
+  config.set_value('model', 'path/to/model/file')
+  config.set_value('create_dataset', 'module1.module2:function')
+  config.set_value('train', 'module1.module2:function')
+  config.set_value('test', 'module1.module2:function')
+  config.set_value('predict', 'module1.module2:function')
+
+  config.save()
+
+  log('Initialized new TensorCI prediction: {}.\n\n'
+      'Generated new config file at {}'.format(name, config.NAME))
