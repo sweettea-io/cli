@@ -65,7 +65,7 @@ class AbstractApi(object):
       exit(1)
 
     # Return the JSON response
-    return self.handle_response(response, return_headers, err_message)
+    return self.handle_response(response, return_headers)
 
   @staticmethod
   def handle_response(response, return_headers):

@@ -38,15 +38,15 @@ def authed():
 
 
 def get_email():
-  return get_creds.get('login')
+  return get_creds().get('login')
 
 
 def get_team():
-  return get_creds.get('account')
+  return get_creds().get('account')
 
 
 def get_password():
-  return get_creds.get('password')
+  return get_creds().get('password')
 
 
 def get_creds():

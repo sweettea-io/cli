@@ -6,8 +6,8 @@ from tensorci.definitions import auth_header_name
 
 
 @click.command()
-@click.option('--email', '-e', prompt=True)
-@click.option('--password', '-p', prompt=True, hide_input=True)
+@click.option('--email', '-e')
+@click.option('--password', '-p')
 def login(email, password):
   """
   Log in as a TensorCI user. Request responds with api token that can be used for
@@ -17,12 +17,15 @@ def login(email, password):
   :param password: str (required)
   :return: None
   """
-  email = email.strip()
-  pw = password.strip()
+  log('Enter your TensorCI credentials:')
+
+  email = (email or click.prompt('Email')).strip()
 
   if not email:
     log('Email is required.')
     return
+
+  pw = (password or click.prompt('Password', hide_input=True)).strip()
 
   if not pw:
     log('Password is required.')
@@ -32,8 +35,8 @@ def login(email, password):
 
   try:
     resp, headers = api.post('/user/login', payload=payload, return_headers=True)
-  except ApiException as e:
-    log(e.message)
+  except ApiException:
+    log('Authentication failed.')
     return
 
   user_token = headers.get(auth_header_name)
