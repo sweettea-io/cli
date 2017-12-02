@@ -1,6 +1,6 @@
 import os
 
-environment = os.environ.get('ENVIRON')
+environment = os.environ.get('TENSORCI_ENVIRON')
 
 if environment:
   assert environment in ('test', 'dev', 'stating', 'prod')

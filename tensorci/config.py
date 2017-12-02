@@ -10,7 +10,7 @@ class ProdConfig(Config):
   DEBUG = False
 
   def __init__(self):
-    self.DOMAIN = os.environ.get('DOMAIN') or 'app.tensorci.com'
+    self.DOMAIN = os.environ.get('TENSORCI_DOMAIN') or 'app.tensorci.com'
     self.API_URL = 'http://{}/api'.format(self.DOMAIN)
 
 
@@ -18,21 +18,21 @@ class StagingConfig(Config):
   DEBUG = False
 
   def __init__(self):
-    self.DOMAIN = os.environ.get('DOMAIN') or 'staging.app.tensorci.com'
+    self.DOMAIN = os.environ.get('TENSORCI_DOMAIN') or 'staging.app.tensorci.com'
     self.API_URL = 'http://{}/api'.format(self.DOMAIN)
 
 
 class DevConfig(Config):
 
   def __init__(self):
-    self.DOMAIN = os.environ.get('DOMAIN') or 'dev.app.tensorci.com'
+    self.DOMAIN = os.environ.get('TENSORCI_DOMAIN') or 'dev.app.tensorci.com'
     self.API_URL = 'http://{}/api'.format(self.DOMAIN)
 
 
 class TestConfig(Config):
 
   def __init__(self):
-    self.DOMAIN = os.environ.get('DOMAIN') or 'localhost'
+    self.DOMAIN = os.environ.get('TENSORCI_DOMAIN') or 'localhost'
     self.API_URL = 'http://{}/api'.format(self.DOMAIN)
 
 
