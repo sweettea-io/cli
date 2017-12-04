@@ -32,7 +32,6 @@ class AbstractApi(object):
     return self.make_request('delete', route, **kwargs)
 
   def make_request(self, method, route, payload=None, headers=None, return_headers=False):
-
     # Get the proper method (get, post, put, or delete)
     request = getattr(requests, method)
 

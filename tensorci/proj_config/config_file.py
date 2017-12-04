@@ -24,12 +24,12 @@ class ConfigFile(object):
     self.predict = ConfigKey(value=predict, required=True, validation='mod_function')
 
     self.config = dict(name=self.name,
-                     repo=self.repo,
-                     model=self.model,
-                     create_dataset=self.create_dataset,
-                     train=self.train,
-                     test=self.test,
-                     predict=self.predict)
+                       repo=self.repo,
+                       model=self.model,
+                       create_dataset=self.create_dataset,
+                       train=self.train,
+                       test=self.test,
+                       predict=self.predict)
 
   def as_ordered_dict(self):
     d = OrderedDict()
@@ -72,8 +72,9 @@ class ConfigFile(object):
 
     return len(invalid_keys) == 0
 
+
 def setup_yaml():
-  represent_dict_order = lambda self, data:  self.represent_mapping('tag:yaml.org,2002:map', data.items())
+  represent_dict_order = lambda self, data: self.represent_mapping('tag:yaml.org,2002:map', data.items())
   yaml.add_representer(OrderedDict, represent_dict_order)
 
 setup_yaml()
