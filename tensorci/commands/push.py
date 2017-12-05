@@ -33,7 +33,7 @@ def push():
   }
 
   try:
-    resp = api.put('/prediction', payload=payload)
+    resp = api.post('/deployment', payload=payload)
   except ApiException as e:
     log(e.message)
     return
