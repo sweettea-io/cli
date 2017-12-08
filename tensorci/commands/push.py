@@ -32,15 +32,48 @@ def push():
     'git_repo': config.repo.value
   }
 
+  # Make deploy
+  resp = api.post('/deployment', payload=payload, stream=True)
+
+  # Handle error cases
+  if resp.status_code != 200:
+    handle_push_error(resp)
+    return
+
+  if resp.headers.get('X-Accel-Buffering') == 'no':  # streaming resp
+    handle_push_stream_resp(resp)
+  else:  # non-streaming resp
+    handle_push_non_stream_resp(resp)
+
+
+def handle_push_error(resp):
   try:
-    resp = api.post('/deployment', payload=payload)
-  except ApiException as e:
-    log(e.message)
-    return
+    data = resp.json() or {}
+    error = data.get('error')
+  except:
+    error = None
 
-  if resp.get('up_to_date'):
+  if error:
+    log(error)
+  else:
+    log('Unknown error occured with status code {}'.format(resp.status_code))
+
+
+def handle_push_stream_resp(resp):
+  for line in resp.iter_lines(chunk_size=10):
+    if line:
+      log(line)
+
+
+def handle_push_non_stream_resp(resp):
+  try:
+    data = resp.json() or {}
+  except:
+    data = {}
+
+  up_to_date = data.get('up_to_date')
+
+  if up_to_date is True:
     log('Everything up to date.')
-    return
-
-  # TODO: open a socket and pipe logs here instead
-  log('Successfully deployed prediction.')
+  else:
+    log('Unknown response: {}'.format(data or resp.content))

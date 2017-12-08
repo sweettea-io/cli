@@ -31,7 +31,7 @@ class AbstractApi(object):
   def delete(self, route, **kwargs):
     return self.make_request('delete', route, **kwargs)
 
-  def make_request(self, method, route, payload=None, headers=None, return_headers=False):
+  def make_request(self, method, route, payload=None, headers=None, return_headers=False, stream=False):
     # Get the proper method (get, post, put, or delete)
     request = getattr(requests, method)
 
@@ -56,12 +56,17 @@ class AbstractApi(object):
     else:
       args['json'] = payload or {}
 
+    args['stream'] = stream
+
     # Make the request
     try:
       response = request(self.base_url + route, **args)
     except BaseException as e:
       log('Unknown Error while making request: {}'.format(e))
       exit(1)
+
+    if stream:
+      return response
 
     # Return the JSON response
     return self.handle_response(response, return_headers)
