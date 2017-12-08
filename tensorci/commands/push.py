@@ -40,10 +40,10 @@ def push():
     handle_push_error(resp)
     return
 
-  if resp.headers.get('X-Accel-Buffering') == 'no':  # streaming resp
-    handle_push_stream_resp(resp)
-  else:  # non-streaming resp
-    handle_push_non_stream_resp(resp)
+  if resp.headers.get('Content-Type') == 'application/json':
+    handle_non_stream_resp(resp)
+  else:
+    handle_stream_resp(resp)
 
 
 def handle_push_error(resp):
@@ -59,13 +59,13 @@ def handle_push_error(resp):
     log('Unknown error occured with status code {}'.format(resp.status_code))
 
 
-def handle_push_stream_resp(resp):
+def handle_stream_resp(resp):
   for line in resp.iter_lines(chunk_size=10):
     if line:
       log(line)
 
 
-def handle_push_non_stream_resp(resp):
+def handle_non_stream_resp(resp):
   try:
     data = resp.json() or {}
   except:
