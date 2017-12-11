@@ -1,5 +1,6 @@
 import click
 from tensorci import log, auth_required
+from tensorci.definitions import tci_keep_alive
 from tensorci.utils import auth
 from tensorci.utils.api import api, ApiException
 from tensorci.proj_config.config_file import ConfigFile
@@ -61,7 +62,7 @@ def handle_push_error(resp):
 
 def handle_stream_resp(resp):
   for line in resp.iter_lines(chunk_size=10):
-    if line:
+    if line and line != tci_keep_alive:
       log(line)
 
 
