@@ -1,3 +1,4 @@
+from tensorci import log
 from team_helper import current_team
 from tensorci.utils import auth
 from tensorci.proj_config.config_file import ConfigFile
