@@ -3,5 +3,5 @@ from tensorci.utils.deployment import deploy
 
 
 @click.command()
-def train():
-  deploy(action='train')
+def serve():
+  deploy(action='api', with_repo=False)

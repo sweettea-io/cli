@@ -52,6 +52,8 @@ class ConfigFile(object):
     for k, v in file_config.items():
       self.set_value(k, v)
 
+    return self
+
   def set_value(self, key, val):
     if key in self.config:
       self.config[key].set_value(val)
