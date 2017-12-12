@@ -20,8 +20,8 @@ def deploy(action=None, with_repo=True):
 
   # If request succeeded but responded with JSON, parse and log the response
   if resp.headers.get('Content-Type') == 'application/json':
-    handle_non_stream_resp(resp)
+    handle_deploy_json_success(resp)
     return
 
   # Handle the real-time log stream response
-  handle_stream_resp(resp)
+  handle_deploy_stream_success(resp)
