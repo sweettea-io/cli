@@ -8,8 +8,7 @@ def logout():
   """
   Logs a TensorCI user out of the CLI.
   Removes CLI api host from netrc.
-
-  :return: None
   """
+  # Remove authed session from netrc
   auth.delete()
   log('Successfully logged out.')

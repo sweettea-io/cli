@@ -3,7 +3,7 @@ import click
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.helpers.team_helper import current_team
-from tensorci.utils import auth, gitconfig
+from tensorci.utils import gitconfig
 from tensorci.proj_config.config_file import ConfigFile
 from slugify import slugify
 
@@ -14,9 +14,6 @@ def init(name):
   # Require authed user.
   auth_required()
 
-  # Read current team from netrc and fail if not there.
-  curr_team = current_team(required=True)
-
   # Create a ConfigFile class instance from the config file.
   config = ConfigFile()
 
@@ -25,11 +22,11 @@ def init(name):
     log('Project already initialized.')
     return
 
-  # Prompt user, asking what he wants to name his new prediction.
-  name = (name or click.prompt('Prediction Name')).strip()
+  # Prompt user for prediction name unless already provided
+  pred_name = (name or click.prompt('Prediction Name')).strip()
 
-  # Can't do anything without a prediction name :/
-  if not name:
+  # Can't proceed without a prediction name :/
+  if not pred_name:
     log('Prediction Name is required.')
     return
 
@@ -42,11 +39,11 @@ def init(name):
     return
 
   # Slugify the name for them.
-  name = slugify(name, separator='-', to_lower=True)
+  pred_name = slugify(pred_name, separator='-', to_lower=True)
 
   # Add values to the config instance representing the config file
   # (use placeholders for the keys not requested by prompting the user).
-  config.set_value('name', name)
+  config.set_value('name', pred_name)
   config.set_value('repo', git_repo)
   config.set_value('model', 'path/to/model/file')
   config.set_value('create_dataset', 'module1.module2:function')
@@ -58,4 +55,4 @@ def init(name):
   config.save()
 
   log('Initialized new TensorCI prediction: {}.\n\n'
-      'Generated new config file at {}'.format(name, config.NAME))
+      'Generated new config file at {}'.format(pred_name, config.NAME))

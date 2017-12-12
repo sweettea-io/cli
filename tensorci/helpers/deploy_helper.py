@@ -5,16 +5,17 @@ from tensorci.definitions import tci_keep_alive
 
 
 def curate_deploy_payload(with_repo=True):
-  # Read current team from netrc and fail if not there
+  # Read current team from netrc and fail if not there.
   curr_team = current_team(required=True)
 
-  # Load config file from disk into our ConfigFile model
+  # Load config file from disk into our ConfigFile model.
   config = ConfigFile().load()
 
-  # Return if config file not valid
+  # Return if config file not valid.
   if not config.validate():
     exit(1)
 
+  # Construct api payload and return it
   payload = {
     'team_slug': curr_team,
     'prediction_slug': config.name.value,
