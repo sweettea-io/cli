@@ -1,6 +1,7 @@
 import os
 import click
-from tensorci import log, auth_required
+from tensorci import log
+from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils import auth, gitconfig
 from tensorci.proj_config.config_file import ConfigFile
 from slugify import slugify

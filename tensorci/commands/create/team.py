@@ -1,5 +1,6 @@
 import click
-from tensorci import log, auth_required
+from tensorci import log
+from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils import auth
 from tensorci.utils.api import api, ApiException
 from slugify import slugify
