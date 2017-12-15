@@ -9,6 +9,7 @@ from use_team import use_team
 from get import get
 from current_team import current_team
 from version import version
+from logs import logs
 
 all_cmds = [
   login,
@@ -21,5 +22,6 @@ all_cmds = [
   use_team,
   get,
   current_team,
-  version
+  version,
+  logs
 ]

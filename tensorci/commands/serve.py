@@ -4,4 +4,4 @@ from tensorci.utils.deployment import deploy
 
 @click.command()
 def serve():
-  deploy(action='api', with_repo=False)
+  deploy(action='api')
