@@ -1,8 +1,9 @@
 import click
+from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils.api import api
 from tensorci.helpers.dynamic_response_helper import handle_dynamic_log_response
-from tenosrci.helpers.payload_helper import team_prediction_payload
+from tensorci.helpers.payload_helper import team_prediction_payload
 
 
 @click.command()
@@ -19,5 +20,10 @@ def logs(follow):
   resp = api.get('/deployment/logs', payload=payload, stream=True)
 
   # Handle response
-  handle_dynamic_log_response(resp)
+  logs = handle_dynamic_log_response(resp)
 
+  # If logs were sent back in a non-streaming response (just JSON),
+  # iterate over them and log each line
+  if not follow and logs:
+    for line in logs:
+      log(line)

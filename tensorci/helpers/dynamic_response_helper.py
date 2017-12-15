@@ -8,7 +8,7 @@ def handle_dynamic_log_response(resp):
     return
 
   if resp.headers.get('Content-Type') == 'application/json':
-    handle_json_result(resp)
+    return handle_json_result(resp)
   else:
     handle_stream_result(resp)
 
@@ -19,8 +19,10 @@ def handle_json_result(resp):
   except:
     data = {}
 
-  if data.get('msg'):
-    log(data.get('msg'))
+  if data.get('log'):
+    log(data.get('log'))
+
+  return data
 
 
 def handle_stream_result(resp):
