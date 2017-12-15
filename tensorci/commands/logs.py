@@ -14,16 +14,15 @@ def logs(follow):
 
   # Format our payload
   payload = team_prediction_payload()
-  payload['follow'] = follow
+  payload['follow'] = str(follow).lower()
 
   # Perform the deploy with a streaming response
   resp = api.get('/deployment/logs', payload=payload, stream=True)
 
   # Handle response
-  logs = handle_dynamic_log_response(resp)
+  parsed_resp = handle_dynamic_log_response(resp)
 
   # If logs were sent back in a non-streaming response (just JSON),
-  # iterate over them and log each line
-  if not follow and logs:
-    for line in logs:
-      log(line)
+  # just print the log dump
+  if not follow and parsed_resp.get('logs'):
+    log('\n'.join(parsed_resp.get('logs')))
