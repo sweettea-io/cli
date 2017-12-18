@@ -2,7 +2,8 @@ from team_helper import current_team
 from tensorci.proj_config.config_file import ConfigFile
 
 
-def team_prediction_payload(include_repo=False):
+# TODO: Rename this and just make a config reader or something
+def team_prediction_payload(include_repo=False, include_model=False):
   # Read current team from netrc and fail if not there.
   curr_team = current_team(required=True)
 
@@ -21,5 +22,8 @@ def team_prediction_payload(include_repo=False):
 
   if include_repo:
     payload['git_repo'] = config.repo.value
+
+  if include_model:
+    payload['model'] = config.model.value
 
   return payload
