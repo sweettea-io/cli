@@ -62,8 +62,16 @@ class ConfigFile(object):
       self.config[key].set_value(val)
 
   def save(self):
+    # Write the yaml information
     with open(self.path, 'w+') as f:
       yaml.dump(self.as_ordered_dict(), f, default_flow_style=False)
+
+    # Doublespace everything (personal pref)
+    with open(self.path) as f:
+      content = f.read()
+
+    with open(self.path, 'w+') as f:
+      f.write(content.replace('\n', '\n\n').strip())
 
   def validate(self):
     invalid_keys = []
