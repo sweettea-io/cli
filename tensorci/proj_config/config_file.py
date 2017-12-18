@@ -54,6 +54,9 @@ class ConfigFile(object):
 
     return self
 
+  def abs_model_path(self):
+    return os.path.join(os.getcwd(), self.model.value)
+
   def set_value(self, key, val):
     if key in self.config:
       self.config[key].set_value(val)

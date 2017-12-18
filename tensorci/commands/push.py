@@ -4,4 +4,4 @@ from tensorci.utils.deployment import deploy
 
 @click.command()
 def push():
-  deploy(action='push', include_repo=True)
+  deploy(action='push', include_repo=True, include_model_ext=True)

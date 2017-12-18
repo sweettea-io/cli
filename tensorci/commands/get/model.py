@@ -6,17 +6,17 @@ from tensorci.helpers.dynamic_response_helper import handle_error
 from tensorci.helpers.payload_helper import team_prediction_payload
 from tensorci.utils.api import api, ApiException
 from requests_toolbelt.downloadutils import stream
+from tensorci.helpers.file_helper import break_file, add_ext, filenames_with_ext
 
 
-# TODO: add -o --output option to save the model there
 @click.command()
-def model():
+@click.option('--output', '-o')
+def model(output):
   # Require authed user
   auth_required()
 
   # Build our payload
-  payload = team_prediction_payload(include_model=True)
-  model_path = payload.pop('model')
+  payload = team_prediction_payload()
 
   try:
     # Make streaming request
@@ -30,41 +30,61 @@ def model():
     handle_error(resp)
     return
 
-  cwd = os.getcwd()
-  full_model_path = '{}/{}'.format(cwd, model_path)
+  # if output file was specified, create the absolute path from that
+  if output:
+    if output.startswith('/'):  # already abs path
+      model_path = output
+    else:  # create abs path from cwd
+      model_path = os.path.join(os.getcwd(), output)
+  else:
+    # Load our config file
+    config = ConfigFile().load()
 
-  file_path_comps = full_model_path.split('/')
-  file_with_ext = file_path_comps.pop()
-  dirname = '/'.join(file_path_comps)
+    # Get the model file's absolute path based on cwd
+    model_path = config.abs_model_path()
 
-  file_name_comps = file_with_ext.split('.')
-  file_ext = file_name_comps.pop()
-  file_name = '.'.join(file_name_comps)
+  # Get components of model_path
+  direc, filename, ext = break_file(model_path)
+
+  # Set ext to what type of file was fetched (only if output not specified)
+  if not output:
+    ext = resp.headers.get('Model-File-Type') or ext
+
+  # Join filename with ext now that ext is solidified
+  filename_w_ext = add_ext(filename, ext)
 
   # Create the model file's directory if it doesn't exist yet
-  if dirname and not os.path.exists(dirname):
-    os.makedirs(dirname)
+  if direc and not os.path.exists(direc):
+    os.makedirs(direc)
 
-  save_to = full_model_path
+  # Path we're gonna save model to
+  save_to = os.path.join(direc, filename_w_ext)
 
-  # If the model file already exists
-  if os.path.exists(full_model_path):
-    # Modify the name of the file so there are no conflicts (i.e. add a number to the end of it)
-    files_with_same_ext = {n: True for n in os.listdir(dirname) if n.endswith('.{}'.format(file_ext))}
+  # If the model file already exists, modify it with a number on the end to prevent overwriting.
+  if os.path.exists(model_path):
+    # Get a map of files in the directory that have the same ext as our desired save_to path.
+    files_with_same_ext = filenames_with_ext(direc, ext)
 
+    # Iterate until <filename><i>.<ext> is available, then create new save_to with that.
     i = 1
     while True:
       i += 1
-      numbered_file_name = '{}{}.{}'.format(file_name, i, file_ext)
+      numbered_filename = add_ext('{}{}'.format(filename, i), ext)
 
-      # if numbered file name hasn't been take yet, use that name.
-      if not files_with_same_ext.get(numbered_file_name):
-        save_to = '{}/{}'.format(dirname, numbered_file_name)
+      # if numbered file name hasn't been taken yet, use that name.
+      if not files_with_same_ext.get(numbered_filename):
+        save_to = os.path.join(direc, numbered_filename)
         break
 
   try:
-    # TODO: add prog bar
-    # Stream the response to a file
+    # TODO: add prog bar:
+    # # Get total bytes from resp
+    # bar = ProgressBar(expected_size=<total_bytes>, filled_char='=')
+    # b = io.BytesIO()
+    # # Set some callback on b, involving bar.show(bytes_read)
+    # stream.stream_response_to_file(resp, path=b)
+
+    # Stream the response into our desired file path.
     stream.stream_response_to_file(resp, path=save_to)
   except BaseException as e:
     log('Error streaming model file to path {} with error: {}'.format(save_to, e))

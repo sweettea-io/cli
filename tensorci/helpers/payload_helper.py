@@ -3,7 +3,7 @@ from tensorci.proj_config.config_file import ConfigFile
 
 
 # TODO: Rename this and just make a config reader or something
-def team_prediction_payload(include_repo=False, include_model=False):
+def team_prediction_payload(include_repo=False, include_model_ext=False):
   # Read current team from netrc and fail if not there.
   curr_team = current_team(required=True)
 
@@ -11,6 +11,7 @@ def team_prediction_payload(include_repo=False, include_model=False):
   config = ConfigFile().load()
 
   # Return if config file not valid.
+  # TODO: add config validation for model file string
   if not config.validate():
     exit(1)
 
@@ -23,7 +24,7 @@ def team_prediction_payload(include_repo=False, include_model=False):
   if include_repo:
     payload['git_repo'] = config.repo.value
 
-  if include_model:
-    payload['model'] = config.model.value
+  if include_model_ext:
+    payload['model_ext'] = config.model.value.split('.').pop()
 
   return payload

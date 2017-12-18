@@ -39,11 +39,15 @@ def handle_stream_result(resp):
 def handle_error(resp):
   try:
     data = resp.json() or {}
-    error = data.get('error')
   except:
-    error = None
+    data = {}
 
-  if error:
-    log(error)
-  else:
-    log('Unknown error occured with status code {}'.format(resp.status_code))
+  if data.get('log'):
+    log(data.get('log'))
+    return
+
+  if data.get('error'):
+    log(data.get('error'))
+    return
+
+  log('Unknown error occured with status code {}'.format(resp.status_code))
