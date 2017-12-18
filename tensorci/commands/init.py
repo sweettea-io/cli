@@ -46,7 +46,7 @@ def init(name):
   config.set_value('name', pred_name)
   config.set_value('repo', git_repo)
   config.set_value('model', 'path/to/model/file')
-  config.set_value('create_dataset', 'module1.module2:function')
+  config.set_value('prepro_data', 'module1.module2:function')
   config.set_value('train', 'module1.module2:function')
   config.set_value('test', 'module1.module2:function')
   config.set_value('predict', 'module1.module2:function')
