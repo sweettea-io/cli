@@ -7,6 +7,7 @@ from tensorci.helpers.payload_helper import team_prediction_payload
 from tensorci.utils.api import api, ApiException
 from requests_toolbelt.downloadutils import stream
 from tensorci.helpers.file_helper import break_file, add_ext, filenames_with_ext
+from tensorci.helpers.multipart_request_helper import ProgressDownloadStream
 
 
 @click.command()
@@ -77,15 +78,12 @@ def model(output):
         break
 
   try:
-    # TODO: add prog bar:
-    # # Get total bytes from resp
-    # bar = ProgressBar(expected_size=<total_bytes>, filled_char='=')
-    # b = io.BytesIO()
-    # # Set some callback on b, involving bar.show(bytes_read)
-    # stream.stream_response_to_file(resp, path=b)
+    # Set up progress bar buffer that will monitor the download while also writing to our desired file.
+    total_file_bytes = int(resp.headers.get('Content-Length'))
+    dl_stream = ProgressDownloadStream(expected_size=total_file_bytes, save_to=save_to)
 
-    # Stream the response into our desired file path.
-    stream.stream_response_to_file(resp, path=save_to)
+    # Stream the response to our custom download stream.
+    stream.stream_response_to_file(resp, path=dl_stream)
   except BaseException as e:
     log('Error streaming model file to path {} with error: {}'.format(save_to, e))
     return
