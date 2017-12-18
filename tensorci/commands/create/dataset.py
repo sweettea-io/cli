@@ -5,6 +5,8 @@ from tensorci.helpers.auth_helper import auth_required
 from tensorci.helpers.payload_helper import team_prediction_payload
 from tensorci.utils.api import api, ApiException
 from slugify import slugify
+from tensorci.helpers.multipart_request_helper import create_callback
+from tensorci.helpers.dynamic_response_helper import handle_error
 from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncoderMonitor
 
 
@@ -43,8 +45,11 @@ def dataset(name, file):
   # Create a multipart encoder
   encoder = MultipartEncoder(fields=payload)
 
+  # Create progress callback
+  callback = create_callback(encoder)
+
   # Create a monitor for the encoder so we can track upload progress
-  monitor = MultipartEncoderMonitor(encoder, monitor_upload)
+  monitor = MultipartEncoderMonitor(encoder, callback)
 
   try:
     resp = api.post('/dataset',
@@ -55,10 +60,8 @@ def dataset(name, file):
     log(e.message)
     return
 
-  print resp.__dict__
+  if resp.status_code != 201:
+    handle_error(resp)
+    return
 
-  log('Successfully created dataset {}.'.format(dataset_slug))
-
-
-def monitor_upload(monitor):
-  pass
+  log('\nSuccessfully created dataset, {}.'.format(dataset_slug))
