@@ -86,7 +86,7 @@ def model(output):
     # Stream the response to our custom download stream.
     stream.stream_response_to_file(resp, path=dl_stream)
   except BaseException as e:
-    log('Error streaming model file to path {} with error: {}'.format(save_to, e))
+    log('\nError streaming model file to path {} with error: {}'.format(save_to, e))
     return
 
-  log('Successfully fetched trained model.')
+  log('\nSuccessfully fetched trained model.')
