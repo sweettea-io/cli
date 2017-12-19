@@ -8,6 +8,7 @@ from tensorci.utils.api import api, ApiException
 from requests_toolbelt.downloadutils import stream
 from tensorci.helpers.file_helper import break_file, add_ext, filenames_with_ext
 from tensorci.helpers.multipart_request_helper import ProgressDownloadStream
+from tensorci.proj_config.config_file import ConfigFile
 
 
 @click.command()

@@ -17,7 +17,7 @@ class ConfigFile(object):
     # Config file keys
     self.name = ConfigKey(value=name, required=True, validation='slug')
     self.repo = ConfigKey(value=repo, required=True, validation='url')
-    self.model = ConfigKey(value=model, required=True, validation='truthy')
+    self.model = ConfigKey(value=model, required=True, validation=self.model_path_validation)
     self.prepro_data = ConfigKey(value=prepro_data, required=True, validation='mod_function')
     self.train = ConfigKey(value=train, required=True, validation='mod_function')
     self.test = ConfigKey(value=test, required=False, validation='mod_function')
@@ -54,9 +54,6 @@ class ConfigFile(object):
 
     return self
 
-  def abs_model_path(self):
-    return os.path.join(os.getcwd(), self.model.value)
-
   def set_value(self, key, val):
     if key in self.config:
       self.config[key].set_value(val)
@@ -85,6 +82,12 @@ class ConfigFile(object):
 
     return len(invalid_keys) == 0
 
+  def abs_model_path(self):
+    return os.path.join(os.getcwd(), self.model.value)
+
+  def model_path_validation(self):
+    # Ensure model path is a relative path
+    return bool(self.model.value) and not self.model.value.startswith('/')
 
 def setup_yaml():
   represent_dict_order = lambda self, data: self.represent_mapping('tag:yaml.org,2002:map', data.items())

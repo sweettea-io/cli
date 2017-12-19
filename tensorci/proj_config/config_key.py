@@ -14,7 +14,7 @@ class ConfigKey(object):
     self.value = val
 
   def validate(self):
-    if type(self.validation).__name__ == 'function':
+    if type(self.validation).__name__ in ('function', 'instancemethod'):
       return self.validation()
 
     if not hasattr(self, self.validation):
