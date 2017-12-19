@@ -79,14 +79,13 @@ def model(output):
         break
 
   try:
-    # Set up progress bar buffer that will monitor the download while also writing to our desired file.
     total_file_bytes = int(resp.headers.get('Content-Length'))
-    dl_stream = ProgressDownloadStream(expected_size=total_file_bytes, save_to=save_to)
 
-    # Stream the response to our custom download stream.
-    stream.stream_response_to_file(resp, path=dl_stream)
+    # Set up progress bar buffer that will monitor the download while also writing to our desired file.
+    dl_stream = ProgressDownloadStream(stream=resp, expected_size=total_file_bytes)
+    dl_stream.stream_to_file(save_to)
   except BaseException as e:
     log('\nError streaming model file to path {} with error: {}'.format(save_to, e))
     return
 
-  log('\nSuccessfully fetched trained model.')
+  log('\nSaved model file to {}'.format(save_to.replace('{}/'.format(os.getcwd()), '')))

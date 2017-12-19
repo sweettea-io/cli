@@ -1,4 +1,4 @@
-from io import BytesIO
+import os
 from clint.textui.progress import Bar as ProgressBar
 
 
@@ -11,21 +11,19 @@ def create_callback(encoder):
   return callback
 
 
-class ProgressDownloadStream(BytesIO):
+class ProgressDownloadStream(object):
 
-  def __init__(self, expected_size=None, save_to=None):
-    super(BytesIO, self).__init__(self)
+  def __init__(self, stream=None, expected_size=None, chunk_size=512):
+    self.stream = stream
     self.prog_bar = ProgressBar(expected_size=expected_size, filled_char='=')
     self.progress = 0
-    self.f = open(save_to, 'wb')
+    self.chunk_size = chunk_size
 
-  def write(self, chunk):
-    super(BytesIO, self).write(chunk)
-    self.f.write(chunk)
+  def stream_to_file(self, path):
+    assert not os.path.exists(path), 'File already exists at path: {}'.format(path)
 
-    self.progress += int(len(chunk))
-    self.prog_bar.show(self.progress)
-
-  def close(self):
-    super(BytesIO, self).close()
-    self.f.close()
+    with open(path, 'wb') as f:
+      for chunk in self.stream.iter_content(chunk_size=self.chunk_size):
+        f.write(chunk)
+        self.progress += int(len(chunk))
+        self.prog_bar.show(self.progress)

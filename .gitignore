@@ -9,3 +9,4 @@ dist/
 build/
 .tensorci.yml
 test.json
+data/
