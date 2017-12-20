@@ -10,7 +10,7 @@ from tensorci.utils.api import api, ApiException
 @click.argument('name')
 def use_team(name):
   """
-  Sets the current team.
+  Set the current team.
 
   Ex: tensorci use-team myteam
   """
