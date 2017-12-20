@@ -10,3 +10,4 @@ build/
 .tensorci.yml
 test.json
 data/
+bin/
