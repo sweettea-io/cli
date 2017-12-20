@@ -15,7 +15,8 @@ setup(name='tensorci',
         'requests',
         'tinynetrc',
         'pyyaml',
-        'gitpython'
+        'gitpython',
+        'clint'
       ],
       entry_points='''
         [console_scripts]
