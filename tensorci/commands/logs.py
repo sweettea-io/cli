@@ -9,6 +9,16 @@ from tensorci.helpers.payload_helper import team_prediction_payload
 @click.command()
 @click.option('--follow', '-f', is_flag=True)
 def logs(follow):
+  """
+  Show logs from the latest training session.
+
+  Includes logs from preprocessing, training, and testing steps.
+
+  If the --follow (-f) option is provided, the logs will be streamed
+  and followed in real-time.
+
+  Ex: tensorci logs -f
+  """
   # Require authed user
   auth_required()
 

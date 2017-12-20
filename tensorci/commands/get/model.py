@@ -14,6 +14,15 @@ from tensorci.proj_config.config_file import ConfigFile
 @click.command()
 @click.option('--output', '-o')
 def model(output):
+  """
+  Fetch the latest trained model.
+
+  If the --output (-o) option is provided, the model file will be saved to
+  that specified file path. Otherwise, it will be saved to the value of
+  the 'model' key provided in .tensorci.yml.
+
+  Ex: tensorci get model
+  """
   # Require authed user
   auth_required()
 

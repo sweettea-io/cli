@@ -14,6 +14,14 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncod
 @click.option('--name', '-n')
 @click.option('--file', '-f', required=True)
 def dataset(name, file):
+  """
+  Create a TensorCI dataset from a JSON file.
+
+  The dataset will be associated with the TensorCI project
+  of the current working directory.
+
+  Ex: tensorci create dataset -f mydataset.json
+  """
   # Require authed user
   auth_required()
 

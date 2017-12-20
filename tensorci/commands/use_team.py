@@ -10,9 +10,9 @@ from tensorci.utils.api import api, ApiException
 @click.argument('name')
 def use_team(name):
   """
-  Switches current team to desired team by name.
+  Sets the current team.
 
-  :param team: str (required)
+  Ex: tensorci use-team myteam
   """
   # Require authed user
   auth_required()

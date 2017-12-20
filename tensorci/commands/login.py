@@ -10,11 +10,12 @@ from tensorci.definitions import auth_header_name
 @click.option('--password', '-p')
 def login(email, password):
   """
-  Log in as a TensorCI user. Request responds with api token that can be used for
-  future authed requests to TensorCI API. Email and API token are stored in netrc file.
+  Login as a TensorCI user.
 
-  :param email: str (required)
-  :param password: str (required)
+  If --email (-e) and --password (-p) are not provided as options, the user
+  will be prompted for these values.
+
+  Ex: tensorci login
   """
   log('Enter your TensorCI credentials:')
 

@@ -4,4 +4,12 @@ from tensorci.utils.deployment import deploy
 
 @click.command()
 def push():
+  """
+  Train a model and serve its predictions.
+
+  Equivalent to running 'tensorci train', waiting for preprocessing/training/testing
+  to finish, and then running 'tensorci serve'.
+
+  Ex: tensorci push
+  """
   deploy(action='push', include_repo=True, include_model_ext=True)

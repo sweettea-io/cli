@@ -11,6 +11,20 @@ from slugify import slugify
 @click.command()
 @click.option('--name', '-n')
 def init(name):
+  """
+  Create a TensorCI project from a git repo.
+
+  This command will fail if the current working directory is not the base
+  of a git repository.
+
+  This project will be associated with the current team in use by the CLI,
+  and a new config file named .tensorci.yml will be created in the current
+  working directory.
+
+  If the --name (-n) option is not specified, the user will be prompted to enter one.
+
+  Ex: tensorci init
+  """
   # Require authed user.
   auth_required()
 
@@ -19,15 +33,15 @@ def init(name):
 
   # If the current directory already has a config file, tell them and exit.
   if os.path.exists(config.path):
-    log('Project already initialized.')
+    log('TensorCI project already exists.')
     return
 
   # Prompt user for prediction name unless already provided
-  pred_name = (name or click.prompt('Prediction Name')).strip()
+  pred_name = (name or click.prompt('Project Name')).strip()
 
   # Can't proceed without a prediction name :/
   if not pred_name:
-    log('Prediction Name is required.')
+    log('Project Name is required.')
     return
 
   # Find this git project's remote url from inside .git/config
@@ -54,5 +68,5 @@ def init(name):
   # Write the config file to the user's project.
   config.save()
 
-  log('Initialized new TensorCI prediction: {}.\n\n'
+  log('Initialized new TensorCI project: {}.\n\n'
       'Generated new config file at {}'.format(pred_name, config.NAME))

@@ -7,7 +7,11 @@ from tensorci import log
 @click.command(name='current-team')
 def current_team():
   """
-  Prints current team in use by the CLI.
+  Show the current team in use.
+
+  Displays the current team in-use by the CLI.
+
+  Ex: tensorci current-team
   """
   # Require authed user.
   auth_required()
