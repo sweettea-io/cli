@@ -66,6 +66,8 @@ class AbstractApi(object):
     # Make the request
     try:
       response = request(self.base_url + route, **args)
+    except KeyboardInterrupt:
+      exit(0)
     except BaseException as e:
       log('Unknown Error while making request: {}'.format(e))
       exit(1)
@@ -80,6 +82,8 @@ class AbstractApi(object):
   def handle_response(response, return_headers):
     try:
       json = response.json() or {}
+    except KeyboardInterrupt:
+      exit(0)
     except:
       json = {}
 

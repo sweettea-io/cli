@@ -20,6 +20,8 @@ def team(name):
 
   try:
     api.post('/team', payload={'name': name})
+  except KeyboardInterrupt:
+    return
   except ApiException as e:
     log(e.message)
     return

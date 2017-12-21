@@ -64,6 +64,8 @@ def dataset(name, file):
                     data=monitor,
                     headers={'Content-Type': monitor.content_type},
                     mp_upload=True)
+  except KeyboardInterrupt:
+    return
   except ApiException as e:
     log(e.message)
     return

@@ -30,7 +30,7 @@ def login(email, password):
   # Prompt user for password unless already provided
   pw = (password or click.prompt('Password', hide_input=True)).strip()
 
-  # Can't proceed without email :/
+  # Can't proceed without pw :/
   if not pw:
     log('Password is required.')
     return
@@ -41,6 +41,8 @@ def login(email, password):
   try:
     # Make login request and get both response body and response headers
     resp, headers = api.post('/user/login', payload=payload, return_headers=True)
+  except KeyboardInterrupt:
+    return
   except ApiException:
     log('Authentication failed.')
     return

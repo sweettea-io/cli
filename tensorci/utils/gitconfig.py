@@ -16,11 +16,15 @@ def get_remote_url(remote='origin'):
 
   try:
     config = git.GitConfigParser([config_path], read_only=True)
+  except KeyboardInterrupt:
+    exit(0)
   except BaseException:
     return None, 'Error parsing .git/config file...'
 
   try:
     url = config.get_value('remote "{}"'.format(remote), 'url')
+  except KeyboardInterrupt:
+    exit(0)
   except BaseException:
     return None, 'Error determining remote origin url...make sure you have a git remote origin set up.'
 

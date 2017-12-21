@@ -32,6 +32,8 @@ def model(output):
   try:
     # Make streaming request
     resp = api.get('/prediction/model', payload=payload, stream=True)
+  except KeyboardInterrupt:
+    return
   except ApiException as e:
     log(e.message)
     return
@@ -93,6 +95,8 @@ def model(output):
     # Set up progress bar buffer that will monitor the download while also writing to our desired file.
     dl_stream = ProgressDownloadStream(stream=resp, expected_size=total_file_bytes)
     dl_stream.stream_to_file(save_to)
+  except KeyboardInterrupt:
+    return
   except BaseException as e:
     log('\nError streaming model file to path {} with error: {}'.format(save_to, e))
     return

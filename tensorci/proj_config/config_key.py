@@ -69,6 +69,8 @@ class ConfigKey(object):
 
     try:
       module = import_module(module_str)
+    except KeyboardInterrupt:
+      exit(0)
     except:
       return False
 

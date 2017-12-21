@@ -16,6 +16,8 @@ def handle_dynamic_log_response(resp):
 def handle_json_result(resp):
   try:
     data = resp.json() or {}
+  except KeyboardInterrupt:
+    exit(0)
   except:
     data = {}
 
@@ -31,7 +33,7 @@ def handle_stream_result(resp):
       if line and line != tci_keep_alive:
         log(line)
   except KeyboardInterrupt:
-    pass
+    exit(0)
   except BaseException as e:
     log('Error while parsing logs: {}'.format(e))
 
@@ -39,6 +41,8 @@ def handle_stream_result(resp):
 def handle_error(resp):
   try:
     data = resp.json() or {}
+  except KeyboardInterrupt:
+    exit(0)
   except:
     data = {}
 

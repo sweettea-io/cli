@@ -24,6 +24,8 @@ def use_team(name):
     # Get list of teams from API
     resp = api.get('/teams')
     teams = resp.get('data')
+  except KeyboardInterrupt:
+    return
   except ApiException as e:
     log(e.message)
     return
