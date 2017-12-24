@@ -6,13 +6,13 @@ from tensorci import log
 
 
 class ConfigFile(object):
-  NAME = '.tensorci.yml'
+  FILE_NAME = '.tensorci.yml'
 
-  def __init__(self, path=None, name=None, repo=None, model=None,
-               prepro_data=None, train=None, test=None, predict=None):
+  def __init__(self, path=None, name=None, repo=None, model=None, prepro_data=None,
+               train=None, test=None, predict=None, reload_model=None):
 
     # Config file path
-    self.path = path or '{}/{}'.format(os.getcwd(), self.NAME)
+    self.path = path or '{}/{}'.format(os.getcwd(), self.FILE_NAME)
 
     # Config file keys
     self.name = ConfigKey(value=name, required=True, validation='slug')
@@ -22,6 +22,7 @@ class ConfigFile(object):
     self.train = ConfigKey(value=train, required=True, validation='mod_function')
     self.test = ConfigKey(value=test, required=False, validation='mod_function')
     self.predict = ConfigKey(value=predict, required=True, validation='mod_function')
+    self.reload_model = ConfigKey(value=reload_model, required=False, validation='mod_function')
 
     self.config = dict(name=self.name,
                        repo=self.repo,
@@ -29,7 +30,8 @@ class ConfigFile(object):
                        prepro_data=self.prepro_data,
                        train=self.train,
                        test=self.test,
-                       predict=self.predict)
+                       predict=self.predict,
+                       reload_model=self.reload_model)
 
   def as_ordered_dict(self):
     d = OrderedDict()
@@ -40,6 +42,7 @@ class ConfigFile(object):
     d['train'] = self.train.value
     d['test'] = self.test.value
     d['predict'] = self.predict.value
+    d['reload_model'] = self.reload_model.value
     return d
 
   def load(self):
@@ -63,13 +66,6 @@ class ConfigFile(object):
     with open(self.path, 'w+') as f:
       yaml.dump(self.as_ordered_dict(), f, default_flow_style=False)
 
-    # Doublespace everything (personal pref)
-    with open(self.path) as f:
-      content = f.read()
-
-    with open(self.path, 'w+') as f:
-      f.write(content.replace('\n', '\n\n').strip())
-
   def validate(self):
     invalid_keys = []
 
@@ -89,8 +85,10 @@ class ConfigFile(object):
     # Ensure model path is a relative path
     return bool(self.model.value) and not self.model.value.startswith('/')
 
+
 def setup_yaml():
   represent_dict_order = lambda self, data: self.represent_mapping('tag:yaml.org,2002:map', data.items())
   yaml.add_representer(OrderedDict, represent_dict_order)
+
 
 setup_yaml()

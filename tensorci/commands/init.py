@@ -64,9 +64,10 @@ def init(name):
   config.set_value('train', 'module1.module2:function')
   config.set_value('test', 'module1.module2:function')
   config.set_value('predict', 'module1.module2:function')
+  config.set_value('reload_model', 'module1.module2:function')
 
   # Write the config file to the user's project.
   config.save()
 
   log('Initialized new TensorCI project: {}.\n\n'
-      'Generated new config file at {}'.format(pred_name, config.NAME))
+      'Generated new config file at {}'.format(pred_name, config.FILE_NAME))
