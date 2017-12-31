@@ -3,7 +3,7 @@ from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils.api import api
 from tensorci.helpers.dynamic_response_helper import handle_dynamic_log_response
-from tensorci.helpers.payload_helper import team_prediction_payload
+from tensorci.utils import gitconfig
 
 
 @click.command()
@@ -22,9 +22,19 @@ def logs(follow):
   # Require authed user
   auth_required()
 
+  # Find this git project's remote url from inside .git/config
+  git_repo, err = gitconfig.get_remote_url()
+
+  # Error out if the remote git url couldn't be found.
+  if err:
+    log(err)
+    return
+
   # Format our payload
-  payload = team_prediction_payload()
-  payload['follow'] = str(follow).lower()
+  payload = {
+    'git_url': git_repo,
+    'follow': str(follow).lower()
+  }
 
   # Perform the deploy with a streaming response
   resp = api.get('/deployment/logs', payload=payload, stream=True)

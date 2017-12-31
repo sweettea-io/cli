@@ -12,4 +12,4 @@ def push():
 
   Ex: tensorci push
   """
-  deploy(action='push', include_repo=True, include_model_ext=True)
+  deploy(action='push')

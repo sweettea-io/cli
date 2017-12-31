@@ -1,16 +1,34 @@
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils.api import api
 from tensorci.helpers.dynamic_response_helper import handle_dynamic_log_response
-from tensorci.helpers.payload_helper import team_prediction_payload
+from tensorci.proj_config.config_file import ConfigFile
+from tensorci.utils import gitconfig
 
 
-def deploy(action=None, include_repo=False, include_model_ext=False):
+def deploy(action=None):
   # Require authed user
   auth_required()
 
-  # Get our deploy payload
-  payload = team_prediction_payload(include_repo=include_repo,
-                                    include_model_ext=include_model_ext)
+  # Load config file from disk into our ConfigFile model.
+  config = ConfigFile().load()
+
+  # Return if config file not valid.
+  if not config.validate():
+    exit(1)
+
+  # Find this git project's remote url from inside .git/config
+  git_repo, err = gitconfig.get_remote_url()
+
+  # Error out if the remote git url couldn't be found.
+  if err:
+    log(err)
+    return
+
+  # Create deploy payload
+  payload = {'git_url': git_repo}
+
+  if action in ('train', 'push'):
+    payload['model_ext'] = config.model.value.split('.').pop()
 
   # Perform the deploy with a streaming response
   resp = api.post('/deployment/{}'.format(action), payload=payload, stream=True)

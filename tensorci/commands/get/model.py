@@ -3,12 +3,12 @@ import os
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.helpers.dynamic_response_helper import handle_error
-from tensorci.helpers.payload_helper import team_prediction_payload
 from tensorci.utils.api import api, ApiException
 from requests_toolbelt.downloadutils import stream
 from tensorci.helpers.file_helper import break_file, add_ext, filenames_with_ext
 from tensorci.helpers.multipart_request_helper import ProgressDownloadStream
 from tensorci.proj_config.config_file import ConfigFile
+from tensorci.utils import gitconfig
 
 
 @click.command()
@@ -26,8 +26,16 @@ def model(output):
   # Require authed user
   auth_required()
 
+  # Find this git project's remote url from inside .git/config
+  git_repo, err = gitconfig.get_remote_url()
+
+  # Error out if the remote git url couldn't be found.
+  if err:
+    log(err)
+    return
+
   # Build our payload
-  payload = team_prediction_payload()
+  payload = {'git_url': git_repo}
 
   try:
     # Make streaming request
