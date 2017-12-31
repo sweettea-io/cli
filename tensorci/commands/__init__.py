@@ -5,9 +5,7 @@ from init import init
 from push import push
 from train import train
 from serve import serve
-from use_team import use_team
 from get import get
-from current_team import current_team
 from version import version
 from logs import logs
 
@@ -19,9 +17,7 @@ all_cmds = [
   push,
   train,
   serve,
-  use_team,
   get,
-  current_team,
   version,
   logs
 ]
