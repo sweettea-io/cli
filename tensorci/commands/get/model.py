@@ -39,7 +39,7 @@ def model(output):
 
   try:
     # Make streaming request
-    resp = api.get('/prediction/model', payload=payload, stream=True)
+    resp = api.get('/repo/model', payload=payload, stream=True)
   except KeyboardInterrupt:
     return
   except ApiException as e:
