@@ -10,7 +10,7 @@ from tensorci.proj_config.config_file import ConfigFile
 @click.command()
 def init():
   """
-  Create a TensorCI project from the current git repo.
+  Create a new TensorCI project.
 
   This command will fail if the current working directory is not the base
   of a git repository.
@@ -59,5 +59,4 @@ def init():
   # Write the config file to the user's project.
   config.save()
 
-  log('Initialized new TensorCI project: {}.\n\n'
-      'Generated new config file at {}'.format(pred_name, config.FILE_NAME))
+  log('Initialized new TensorCI project.\nGenerated new config file at {}'.format(config.FILE_NAME))

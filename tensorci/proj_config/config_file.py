@@ -8,15 +8,13 @@ from tensorci import log
 class ConfigFile(object):
   FILE_NAME = '.tensorci.yml'
 
-  def __init__(self, path=None, name=None, repo=None, model=None, prepro_data=None,
-               train=None, test=None, predict=None, reload_model=None):
+  def __init__(self, path=None, model=None, prepro_data=None, train=None,
+               test=None, predict=None, reload_model=None):
 
     # Config file path
     self.path = path or '{}/{}'.format(os.getcwd(), self.FILE_NAME)
 
     # Config file keys
-    self.name = ConfigKey(value=name, required=True, validation='slug')
-    self.repo = ConfigKey(value=repo, required=True, validation='url')
     self.model = ConfigKey(value=model, required=True, validation=self.model_path_validation)
     self.prepro_data = ConfigKey(value=prepro_data, required=True, validation='mod_function')
     self.train = ConfigKey(value=train, required=True, validation='mod_function')
@@ -24,9 +22,7 @@ class ConfigFile(object):
     self.predict = ConfigKey(value=predict, required=True, validation='mod_function')
     self.reload_model = ConfigKey(value=reload_model, required=False, validation='mod_function')
 
-    self.config = dict(name=self.name,
-                       repo=self.repo,
-                       model=self.model,
+    self.config = dict(model=self.model,
                        prepro_data=self.prepro_data,
                        train=self.train,
                        test=self.test,
@@ -35,8 +31,6 @@ class ConfigFile(object):
 
   def as_ordered_dict(self):
     d = OrderedDict()
-    d['name'] = self.name.value
-    d['repo'] = self.repo.value
     d['model'] = self.model.value
     d['prepro_data'] = self.prepro_data.value
     d['train'] = self.train.value
