@@ -13,7 +13,7 @@ setup(name='tensorci',
         'click',
         'awesome-slugify',
         'requests',
-        'requests-toolbelt'
+        'requests-toolbelt',
         'tinynetrc',
         'pyyaml',
         'gitpython',
