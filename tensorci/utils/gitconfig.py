@@ -3,9 +3,6 @@ import os
 
 
 def get_remote_url(remote='origin'):
-  # HACK FOR TESTING
-  return 'https://github.com/whittlbc/tensorci-customer.git', None
-
   git_path = '{}/.git'.format(os.getcwd())
   is_git_repo = os.path.exists(git_path) and os.path.isdir(git_path)
 
