@@ -2,7 +2,6 @@ import click
 import os
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
-from tensorci.helpers.payload_helper import team_prediction_payload
 from tensorci.utils.api import api, ApiException
 from slugify import slugify
 from tensorci.helpers.multipart_request_helper import create_callback
@@ -25,17 +24,20 @@ def dataset(name, file):
   # Require authed user
   auth_required()
 
-  # Start building our payload
-  payload = team_prediction_payload()
+  # Find this git project's remote url from inside .git/config
+  git_repo, err = gitconfig.get_remote_url()
 
-  # If dataset name specified, slugify it.
+  # Error out if the remote git url couldn't be found.
+  if err:
+    log(err)
+    return
+
+  # If dataset name was specified, slugify it.
   if name:
     dataset_slug = slugify(name, separator='-', to_lower=True)
   else:
-    # Default dataset slug is just prediction slug.
-    dataset_slug = payload['prediction_slug']
-
-  payload['dataset_slug'] = dataset_slug
+    # Default dataset slug will just be the repo name
+    dataset_slug = None
 
   # Make sure file actually exists
   if not os.path.exists(file):
@@ -47,8 +49,12 @@ def dataset(name, file):
     log('Dataset must be a JSON file (i.e. dataset.json)')
     return
 
-  # Add file to payload
-  payload['file'] = ('dataset.json', open(file, 'rb'), 'application/json')
+  # Build payload
+  payload = {
+    'git_url': git_repo,
+    'dataset_slug': dataset_slug,
+    'file': ('dataset.json', open(file, 'rb'), 'application/json')
+  }
 
   # Create a multipart encoder
   encoder = MultipartEncoder(fields=payload)

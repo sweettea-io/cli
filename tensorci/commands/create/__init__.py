@@ -1,5 +1,4 @@
 import click
-from team import team
 from dataset import dataset
 
 
@@ -10,12 +9,9 @@ def create():
 
   Currently supported resources:
 
-  * team
-
   * dataset
   """
   pass
 
 
-create.add_command(team)
 create.add_command(dataset)

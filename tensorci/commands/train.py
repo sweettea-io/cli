@@ -19,4 +19,4 @@ def train():
 
   Ex: tensorci train
   """
-  deploy(action='train', include_repo=True, include_model_ext=True)
+  deploy(action='train')
