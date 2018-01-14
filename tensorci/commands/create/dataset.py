@@ -7,6 +7,7 @@ from slugify import slugify
 from tensorci.helpers.multipart_request_helper import create_callback
 from tensorci.helpers.dynamic_response_helper import handle_error
 from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncoderMonitor
+from tensorci.utils import gitconfig
 
 
 @click.command()
