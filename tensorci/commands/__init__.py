@@ -8,6 +8,7 @@ from serve import serve
 from get import get
 from version import version
 from logs import logs
+from dash import dash
 
 all_cmds = [
   login,
@@ -19,5 +20,6 @@ all_cmds = [
   serve,
   get,
   version,
-  logs
+  logs,
+  dash
 ]
