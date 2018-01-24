@@ -27,9 +27,6 @@ def deploy(action=None):
   # Create deploy payload
   payload = {'git_url': git_repo}
 
-  if action in ('train', 'push'):
-    payload['model_ext'] = config.model.value.split('.').pop()
-
   # Perform the deploy with a streaming response
   resp = api.post('/deployment/{}'.format(action), payload=payload, stream=True)
 
