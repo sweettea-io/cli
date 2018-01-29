@@ -81,4 +81,4 @@ def dataset(name, file):
     handle_error(resp)
     return
 
-  log('\nSuccessfully created dataset.')
+  log('Successfully created dataset.')

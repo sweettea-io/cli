@@ -1,4 +1,5 @@
 import os
+from tensorci import log
 from clint.textui.progress import Bar as ProgressBar
 
 
@@ -6,7 +7,13 @@ def create_callback(encoder):
   bar = ProgressBar(expected_size=encoder.len, filled_char='=')
 
   def callback(monitor):
-    bar.show(monitor.bytes_read)
+    if monitor.bytes_read == encoder.len:
+      if not hasattr(monitor, 'finished'):
+        bar.show(monitor.bytes_read)
+        setattr(monitor, 'finished', True)
+        log('\nConverting dataset to database...')
+    else:
+      bar.show(monitor.bytes_read)
 
   return callback
 
