@@ -7,8 +7,8 @@ from tensorci import log
 
 class ConfigFile(object):
   """
-  The 'ConfigFile' object serves as an interface to the .tensorci.yml config file.
-  It contains methods to read/write the file to disk, as well as validatae its contents.
+  Serves as an interface to the .tensorci.yml config file.
+  Contains methods to read/write the config file to disk, as well as validate its contents.
 
   Basic usage:
 
