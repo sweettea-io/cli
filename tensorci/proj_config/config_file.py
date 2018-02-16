@@ -41,7 +41,7 @@ class ConfigFile(object):
 
   def load(self):
     if not os.path.exists(self.path):
-      return
+      return self
 
     with open(self.path, 'r') as f:
       file_config = yaml.load(f)
@@ -61,8 +61,12 @@ class ConfigFile(object):
       yaml.dump(self.as_ordered_dict(), f, default_flow_style=False)
 
   def validate(self):
-    invalid_keys = []
+    if not os.path.exists(self.path):
+      log('A {} config file must exist before running this command.\n'.format(self.FILE_NAME) +
+          'Run \'tensorci init\' to initialize your project and create this file.')
+      return False
 
+    invalid_keys = []
     for k, v in self.config.items():
       if not v.validate():
         invalid_keys.append(k)
