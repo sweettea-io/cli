@@ -40,7 +40,7 @@ class ConfigFile(object):
     self.path = path or '{}/{}'.format(os.getcwd(), self.FILE_NAME)
 
     # Establish attributes for each config file key (represented as the ConfigKey class).
-    self.model = ConfigKey(value=model, required=True, validation=self.model_path_validation)
+    self.model = ConfigKey(value=model, required=True, custom_validation=self.model_path_validation)
     self.prepro_data = ConfigKey(value=prepro_data, required=True, validation='mod_function')
     self.train = ConfigKey(value=train, required=True, validation='mod_function')
     self.test = ConfigKey(value=test, required=False, validation='mod_function')
@@ -142,7 +142,8 @@ class ConfigFile(object):
     """
     return os.path.join(os.getcwd(), self.model.value)
 
-  def model_path_validation(self):
+  @staticmethod
+  def model_path_validation(val):
     """
     Custom validation method for the 'model' key
 
@@ -150,7 +151,7 @@ class ConfigFile(object):
     :rtype: bool
     """
     # Ensure model path is a relative path
-    return bool(self.model.value) and not self.model.value.startswith('/')
+    return bool(val) and not val.startswith('/')
 
 
 def setup_yaml():

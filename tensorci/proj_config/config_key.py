@@ -14,24 +14,27 @@ class ConfigKey(object):
 
   """
 
-  def __init__(self, value=None, required=False, validation='truthy'):
+  def __init__(self, value=None, required=False, validation='truthy', custom_validation=None):
     """
-    :param str value: Value to set for this key
-    :param bool required: Is this key's validation required to pass?
-    :param validation:
-      String name of validation function to use when 'validate' is called, or,
-      your own custom validation function.
-
-      Multiple types supported:
-        - str
-        - function
-        - instancemethod
-
-      default: 'truthy'
+    :param str value:
+      Value to set for this key
+    :param bool required:
+      Is this key's validation required to pass?
+    :param str validation:
+      String name of validation instance method (of this class) to use when 'validate' is called.
+      Supported values:
+        - 'truthy'
+        - 'slug'
+        - 'url'
+        - 'mod_function'
+      Default: 'truthy'
+    :param custom_validation:
+      Callable function used for validation. If provided, will take precedent over the 'validation' param.
     """
     self.value = value
     self.required = required
     self.validation = validation
+    self.custom_validation = custom_validation
 
   def set_value(self, val):
     """Set the value for this key"""
@@ -42,7 +45,6 @@ class ConfigKey(object):
     Validate this class's 'value' attribute
 
     :returns: Whether the value is considered "valid".
-
     """
     # If value isn't required and also isn't specified, it's automatically valid.
     if not self.required and not self.value:
@@ -52,9 +54,9 @@ class ConfigKey(object):
     if self.required and not self.value:
       return False
 
-    # If our validation attr is callable, call it.
-    if type(self.validation).__name__ in ('function', 'instancemethod'):
-      return self.validation()
+    # If custom validation function provided, use that for validation.
+    if self.custom_validation:
+      return self.custom_validation(self.value)
 
     # If non-supported validation string provided, fallback to 'truthy' validation.
     if not hasattr(self, self.validation):
@@ -67,7 +69,7 @@ class ConfigKey(object):
 
   def truthy_validator(self):
     """
-    :return: Whether this class's 'value' attribute is truthy.
+    :return: Whether this class's 'value' attribute is "truthy".
     :rtype: bool
     """
     return bool(self.value)
@@ -98,18 +100,14 @@ class ConfigKey(object):
     :return:
       Whether this class's 'value' attribute is a valid function path.
       Path must follow the 'module1.module2.moduleN:function_name' format.
-
-      Valid example: 'src.main:train'
-
+      Example: 'src.main:train'
     :rtype: bool
     """
     # Split the path into modules/function_name
     module_str, func_str = self.value.split(':')
 
-    if not module_str:
-      return False
-
-    if not func_str:
+    # Both components must exist
+    if not module_str or not func_str:
       return False
 
     try:
@@ -120,12 +118,8 @@ class ConfigKey(object):
     except:
       return False
 
-    # Module must actually exist
-    if not module:
-      return False
-
-    # Function must exist on module
-    if not hasattr(module, func_str):
+    # Module must actually exist and have function as attr
+    if not module or not hasattr(module, func_str):
       return False
 
     func = getattr(module, func_str)
