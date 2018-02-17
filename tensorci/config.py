@@ -3,6 +3,9 @@ from utils.env import env
 
 
 class Config:
+  """
+  Base Config class for storing any non-environment-variable config information
+  """
   DEBUG = True
 
 
@@ -41,6 +44,7 @@ class TestConfig(Config):
 
 
 def get_config():
+  """Get config class instance based on which environment is currently running"""
   config_class = globals().get('{}Config'.format(env().capitalize()))
   return config_class()
 
