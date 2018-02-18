@@ -1,3 +1,6 @@
+"""
+TensorCI API client
+"""
 import os
 from abstract_api import AbstractApi
 from tensorci.config import config

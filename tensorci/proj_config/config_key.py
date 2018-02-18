@@ -40,7 +40,7 @@ class ConfigKey(object):
     """Set the value for this key"""
     self.value = val
 
-  def validate(self):
+  def is_valid(self):
     """
     Validate this class's 'value' attribute
 

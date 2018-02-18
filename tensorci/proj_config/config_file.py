@@ -108,7 +108,7 @@ class ConfigFile(object):
     with open(self.path, 'w+') as f:
       yaml.dump(self.as_ordered_dict(), f, default_flow_style=False)
 
-  def validate(self):
+  def is_valid(self):
     """
     Validate each of the config file's key-val pairs
 
@@ -124,7 +124,7 @@ class ConfigFile(object):
     # Find which keys are invalid
     invalid_keys = []
     for k, v in self.config.items():
-      if not v.validate():
+      if not v.is_valid():
         invalid_keys.append(k)
 
     # Tell the user which keys were invalid

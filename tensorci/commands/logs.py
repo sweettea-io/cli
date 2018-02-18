@@ -22,12 +22,7 @@ def logs(follow):
   auth_required()
 
   # Find this git project's remote url from inside .git/config
-  git_repo, err = gitconfig.get_remote_url()
-
-  # Error out if the remote git url couldn't be found.
-  if err:
-    log(err)
-    return
+  git_repo = gitconfig.get_remote_url()
 
   # Built the payload.
   payload = {

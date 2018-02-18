@@ -32,12 +32,7 @@ def init():
     return
 
   # Find this git project's remote url from inside .git/config
-  git_repo, err = gitconfig.get_remote_url()
-
-  # Error out if the remote git url wasn't found.
-  if err:
-    log(err)
-    return
+  git_repo = gitconfig.get_remote_url()
 
   try:
     # Register the git repo as a TensorCI repo (upsert)

@@ -17,12 +17,7 @@ def dash():
   Ex: tensorci dash
   """
   # Find this git project's remote url from inside .git/config
-  git_repo, err = gitconfig.get_remote_url()
-
-  # Error out if the remote git url couldn't be found.
-  if err:
-    log(err)
-    return
+  git_repo = gitconfig.get_remote_url()
 
   # Parse out team and repo from remote git_url
   path_match = re.match('/(.*).git', urlparse(git_repo).path)
