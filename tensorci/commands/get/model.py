@@ -4,7 +4,7 @@ from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils.api import api
 from requests_toolbelt.downloadutils import stream
-from tensorci.helpers.file_helper import break_file, add_ext, filenames_with_ext
+from tensorci.helpers.file_helper import path_to_components, add_ext, filenames_with_ext
 from tensorci.helpers.multipart_request_helper import ProgressDownloadStream
 from tensorci.proj_config.config_file import ConfigFile
 from tensorci.utils import gitconfig
@@ -56,7 +56,7 @@ def model(output):
     model_path = config.abs_model_path()
 
   # Get components of model_path.
-  direc, filename, ext = break_file(model_path)
+  direc, filename, ext = path_to_components(model_path)
 
   # Set ext to what type of file was fetched (only if output not specified).
   if not output:

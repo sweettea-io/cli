@@ -58,8 +58,9 @@ def dataset(name, file):
   # Create a multipart encoder.
   encoder = MultipartEncoder(fields=payload)
 
-  # Create progress callback.
-  callback = create_callback(encoder)
+  # Create progress callback, specifying message to show when upload completes.
+  callback = create_callback(encoder,
+                             completion_log='\nConverting dataset to database...')
 
   # Create a monitor for the encoder so we can track upload progress.
   monitor = MultipartEncoderMonitor(encoder, callback)

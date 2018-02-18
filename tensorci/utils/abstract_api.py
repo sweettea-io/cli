@@ -202,7 +202,7 @@ class AbstractApiResponse(object):
         self.log_error()
 
       if self.exit_on_error:
-        exit()
+        exit(1)
 
   def parse_json_resp(self):
     """

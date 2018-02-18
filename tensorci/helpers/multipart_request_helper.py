@@ -1,18 +1,42 @@
+"""
+  Helper methods and classes related to multi-part file uploads or downloads
+"""
 import os
 from tensorci import log
 from clint.textui.progress import Bar as ProgressBar
 
 
-def create_callback(encoder):
+def create_callback(encoder, completion_log=None):
+  """
+  Create a progress callback function for a multi-part file upload
+
+  :param encoder:
+    Multipart file encoder
+    :type: requests_toolbelt.multipart.encoder.MultipartEncoder
+  :param str completion_log:
+    Log to display when the file upload has completed
+  :return: Upload progress callback function
+  :rtype: function
+  """
+  # Create a progress bar with the given size, specifying which character to show for progress.
   bar = ProgressBar(expected_size=encoder.len, filled_char='=')
 
+  # Function to be called as the upload progresses
   def callback(monitor):
+    # If upload has completed...
     if monitor.bytes_read == encoder.len:
+      # Hack around that this callback is called twice when completed.
       if not hasattr(monitor, 'finished'):
-        bar.show(monitor.bytes_read)
         setattr(monitor, 'finished', True)
-        log('\nConverting dataset to database...')
+
+        # Show upload progress.
+        bar.show(monitor.bytes_read)
+
+        # Display completion log if provided.
+        if completion_log:
+          log(completion_log)
     else:
+      # Show upload progress.
       bar.show(monitor.bytes_read)
 
   return callback
