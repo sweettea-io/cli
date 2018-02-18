@@ -59,8 +59,8 @@ class AbstractApi(object):
   def delete(self, route, **kwargs):
     return self.make_request('delete', route, **kwargs)
 
-  def make_request(self, method, route, payload=None,
-                   headers=None, stream=False, mp_upload_monitor=None):
+  def make_request(self, method, route, payload=None, headers=None, stream=False,
+                   mp_upload_monitor=None, log_on_error=True, exit_on_error=True):
     """
     Actually perform the API call.
 
@@ -77,6 +77,10 @@ class AbstractApi(object):
     :param mp_upload_monitor:
       Multipart encoder monitor for form-uploaded data
       :type: requests_toolbelt.multipart.encoder.MultipartEncoderMonitor
+    :param bool log_on_error:
+      Whether to log an error message if the request fails
+    :param bool exit_on_error:
+      Whether to exit if the request fails
     :return: an api response object
     :rtype: AbstractApiResponse
     """
@@ -109,7 +113,14 @@ class AbstractApi(object):
       log('Unknown Error while making request: {}'.format(e))
       exit(1)
 
-    return AbstractApiResponse(response, stream=stream, mp_upload=bool(mp_upload_monitor))
+    # Create an abstract api response
+    api_resp = AbstractApiResponse(response,
+                                   stream=stream,
+                                   mp_upload=bool(mp_upload_monitor),
+                                   log_on_error=log_on_error,
+                                   exit_on_error=exit_on_error)
+
+    return api_resp
 
   def build_request_headers(self, headers={}):
     """
@@ -155,24 +166,43 @@ class AbstractApiResponse(object):
   raise an ApiException if the status code doesn't equal 200 or 201.
   """
 
-  def __init__(self, response_obj, stream=False, mp_upload=False):
+  def __init__(self, response_obj, stream=False, mp_upload=False,
+               log_on_error=True, exit_on_error=True):
     """
     :param response_obj:
       API response object returned by the 'requests' library
       :type: requests.Response
+    :param bool stream:
+      Whether request was a streaming request
+    :param bool mp_upload:
+      Whether request was a multi-part upload
+    :param bool log_on_error:
+      Whether to log an error message if the request failed
+    :param bool exit_on_error:
+      Whether to exit if the request failed
     """
     self.response_obj = response_obj
     self.stream = stream
     self.mp_upload = mp_upload
+    self.log_on_error = log_on_error
+    self.exit_on_error = exit_on_error
+
     self.headers = response_obj.headers
     self.status = response_obj.status_code
     self.ok = self.status in (200, 201)
 
     # Don't parse json for successful streaming requests and multi-part uploads.
-    if (stream or mp_upload) and self.ok:
+    if (self.stream or self.mp_upload) and self.ok:
       self.json = None
     else:
       self.json = self.parse_json_resp()
+
+    if not self.ok:
+      if self.log_on_error:
+        self.log_error()
+
+      if self.exit_on_error:
+        exit()
 
   def parse_json_resp(self):
     """

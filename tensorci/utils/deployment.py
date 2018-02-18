@@ -36,10 +36,5 @@ def deploy(action=None):
   # Perform the deployment with a streaming response.
   resp = api.post('/deployment/{}'.format(action), payload=payload, stream=True)
 
-  # Log the error if the request failed.
-  if not resp.ok:
-    resp.log_error()
-    return
-
   # Stream the response logs.
   resp.log_stream()

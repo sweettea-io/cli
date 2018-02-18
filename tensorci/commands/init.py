@@ -41,13 +41,8 @@ def init():
 
   try:
     # Register the git repo as a TensorCI repo (upsert)
-    resp = api.post('/repo/register', payload={'git_url': git_repo})
+    api.post('/repo/register', payload={'git_url': git_repo})
   except KeyboardInterrupt:
-    return
-
-  # Log the error if the request failed.
-  if not resp.ok:
-    resp.log_error()
     return
 
   # Set placeholders for the config key.

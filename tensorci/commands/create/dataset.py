@@ -68,13 +68,8 @@ def dataset(name, file):
 
   try:
     # Upload the dataset.
-    resp = api.post('/dataset', headers=headers, mp_upload_monitor=monitor)
+    api.post('/dataset', headers=headers, mp_upload_monitor=monitor)
   except KeyboardInterrupt:
-    return
-
-  # Log the error if the upload failed.
-  if not resp.ok:
-    resp.log_error()
     return
 
   log('Successfully created dataset.')

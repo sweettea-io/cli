@@ -43,7 +43,7 @@ def login(username, password):
   }
 
   try:
-    resp = api.post('/provider_user/login', payload=payload)
+    resp = api.post('/provider_user/login', payload=payload, log_on_error=False, exit_on_error=False)
   except KeyboardInterrupt:
     return
 

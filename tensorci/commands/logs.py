@@ -41,11 +41,6 @@ def logs(follow):
   except KeyboardInterrupt:
     return
 
-  # Log the error if the request failed.
-  if not resp.ok:
-    resp.log_error()
-    return
-
   if follow:
     # Streaming log response
     resp.log_stream()

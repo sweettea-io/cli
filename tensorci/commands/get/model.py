@@ -42,11 +42,6 @@ def model(output):
   except KeyboardInterrupt:
     return
 
-  # Log the error if the download failed.
-  if not resp.ok:
-    resp.log_error()
-    return
-
   # If output file was specified, create the absolute path from that.
   if output:
     if output.startswith('/'):  # already abs path
