@@ -1,5 +1,5 @@
 """
-  Helper methods related to all-things urls
+Helper methods related to all-things URL
 """
 import os
 import os_helper

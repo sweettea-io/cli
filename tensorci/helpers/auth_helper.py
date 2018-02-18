@@ -1,5 +1,5 @@
 """
-  Helper methods related to user authorization
+Helper methods related to user authorization
 """
 from tensorci import log
 from tensorci.utils.auth import authed

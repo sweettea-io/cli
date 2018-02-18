@@ -1,5 +1,5 @@
 """
-  Helper methods related to the current operating system
+Helper methods related to the current operating system
 """
 from sys import platform
 

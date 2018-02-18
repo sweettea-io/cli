@@ -40,5 +40,8 @@ def dash():
   # Build dashboard url from TensorCI Dashboard url, the team, and the repo.
   url = '{}/{}/{}'.format(config.DASH_URL, team.lower(), repo.lower())
 
-  # Open dashboard url in new tab of default browser
-  url_helper.open_url(url)
+  try:
+    # Open dashboard url in new tab of default browser
+    url_helper.open_url(url)
+  except BaseException:
+    log('Failed to open URL: {}'.format(url))

@@ -1,5 +1,5 @@
 """
-  Helper methods and classes related to multi-part file uploads or downloads
+Helper methods and classes related to multi-part file uploads or downloads
 """
 import os
 from tensorci import log

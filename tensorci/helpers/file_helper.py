@@ -1,5 +1,5 @@
 """
-  Helper methods related to files or their respective paths
+Helper methods related to files or their respective paths
 """
 import os
 
