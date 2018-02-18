@@ -43,16 +43,44 @@ def create_callback(encoder, completion_log=None):
 
 
 class ProgressDownloadStream(object):
+  """
+  Progress bar buffer class that can monitor a file download by displaying
+  progress to the user while also writing to the desired file.
+
+  Basic usage:
+
+    download_stream = ProgressDownloadStream(stream=api_response_obj,
+                                             expected_size=total_file_bytes)
+
+    download_stream.stream_to_file(desired_file_path)
+
+  """
 
   def __init__(self, stream=None, expected_size=None, chunk_size=512):
+    """
+    :param stream:
+      Streaming API response object returned by the 'requests' library
+      :type: requests.Response
+    :param int expected_size:
+      Total size of file being downloaded (in bytes)
+    :param int chunk_size:
+      Chunk size to use when iterating over streamed response content
+    """
     self.stream = stream
     self.prog_bar = ProgressBar(expected_size=expected_size, filled_char='=')
     self.progress = 0
     self.chunk_size = chunk_size
 
   def stream_to_file(self, path):
+    """
+    Download file to given path and display progress to user
+
+    :param str path: Desired file path
+    """
+    # Ensure file doesn't already exist at given path.
     assert not os.path.exists(path), 'File already exists at path: {}'.format(path)
 
+    # Stream downloaded contents to file and show progress
     with open(path, 'wb') as f:
       for chunk in self.stream.iter_content(chunk_size=self.chunk_size):
         f.write(chunk)
