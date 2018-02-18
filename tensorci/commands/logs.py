@@ -2,7 +2,6 @@ import click
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils.api import api
-from tensorci.helpers.dynamic_response_helper import handle_dynamic_log_response
 from tensorci.utils import gitconfig
 
 
@@ -19,7 +18,7 @@ def logs(follow):
 
   Ex: tensorci logs -f
   """
-  # Require authed user
+  # Must already be logged in to perform this command.
   auth_required()
 
   # Find this git project's remote url from inside .git/config
@@ -30,19 +29,29 @@ def logs(follow):
     log(err)
     return
 
-  # Format our payload
+  # Built the payload.
   payload = {
     'git_url': git_repo,
-    'follow': str(follow).lower()
+    'follow': str(follow).lower()  # 'true' or 'false' --> will be converted into query param anyways
   }
 
-  # Perform the deploy with a streaming response
-  resp = api.get('/deployment/logs', payload=payload, stream=True)
+  try:
+    # Get the logs for this deployment.
+    resp = api.get('/deployment/logs', payload=payload, stream=follow)
+  except KeyboardInterrupt:
+    return
 
-  # Handle response
-  parsed_resp = handle_dynamic_log_response(resp)
+  # Log the error if the request failed.
+  if not resp.ok:
+    resp.log_error()
+    return
 
-  # If logs were sent back in a non-streaming response (just JSON),
-  # just print the log dump
-  if not follow and parsed_resp.get('logs'):
-    log('\n'.join(parsed_resp.get('logs')))
+  if follow:
+    # Streaming log response
+    resp.log_stream()
+  else:
+    # JSON dump of logs
+    logs = resp.json.get('logs')
+
+    if logs:
+      log('\n'.join(logs))

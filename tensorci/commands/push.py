@@ -12,4 +12,7 @@ def push():
 
   Ex: tensorci push
   """
-  deploy(action='push')
+  try:
+    deploy(action='push')
+  except KeyboardInterrupt:
+    return

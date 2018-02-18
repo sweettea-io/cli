@@ -24,10 +24,7 @@ class AbstractApi(object):
                              auth_header_name='My-Special-Token',
                              auth_header_val='super-secret-token')
 
-    try:
-      resp = api_client.get('/my-route', payload={'key': 'val'})
-    except AbstractApiException as e:
-      print(e.message)
+    resp = api_client.get('/my-route', payload={'key': 'val'})
 
     resp.status         # 200
     resp.json           # => {'key': 'parsed json response'}
@@ -112,7 +109,7 @@ class AbstractApi(object):
       log('Unknown Error while making request: {}'.format(e))
       exit(1)
 
-    return AbstractApiRepsonse(response)
+    return AbstractApiResponse(response, stream=stream, mp_upload=bool(mp_upload_monitor))
 
   def build_request_headers(self, headers={}):
     """
@@ -158,53 +155,88 @@ class AbstractApiResponse(object):
   raise an ApiException if the status code doesn't equal 200 or 201.
   """
 
-  def __init__(self, response_obj):
+  def __init__(self, response_obj, stream=False, mp_upload=False):
     """
     :param response_obj:
       API response object returned by the 'requests' library
       :type: requests.Response
     """
     self.response_obj = response_obj
+    self.stream = stream
+    self.mp_upload = mp_upload
     self.headers = response_obj.headers
     self.status = response_obj.status_code
-    self.json = self.parse_json_resp()
+    self.ok = self.status in (200, 201)
 
-  def succeeded(self):
-    return self.status in (200, 201)
+    # Don't parse json for successful streaming requests and multi-part uploads.
+    if (stream or mp_upload) and self.ok:
+      self.json = None
+    else:
+      self.json = self.parse_json_resp()
 
   def parse_json_resp(self):
     """
-    Parse JSON response and raise exception if request didn't succeed
-
-    :return: Parsed JSON response body
-    :rtype: dict or list
+    Attempt to parse a JSON response, defaulting to an empty dict.
+    :return: Parsed JSON response
+    :rtype: dict or list (dict if error)
     """
-    json = {}
+    try:
+      return self.response_obj.json() or {}
+    except:
+      return {}
+
+  def log_error(self):
+    """
+    Log the error parsed from the JSON body.
+
+    If a 'log' key was found in the body, it's assumed that this is
+    the specified error message that should be shown to the user.
+
+    Otherwise, an error message is constructed from the 'error' key,
+    the response's status code, and custom error 'code' key.
+    """
+    if self.ok:
+      return
+
+    # Log the provided 'log' message if it exists.
+    provided_err_log_msg = self.json.get('log')
+
+    if provided_err_log_msg:
+      log(provided_err_log_msg)
+      return
+
+    # If log message not provided, construct an error message.
+    err_msg = 'Request failed'
+    error = self.json.get('error')
+    code = self.json.get('code')
+
+    if error:
+      err_msg += ' with error: {}'.format(error)
+
+    if code:
+      err_msg += '; code={}'.format(code)
+
+    err_msg += '; status={}'.format(self.status)
+
+    log(err_msg)
+
+  def log_stream(self, chunk_size=10, lines_to_ignore=(tci_keep_alive)):
+    """
+    Log the streaming response by parsing and iterating over lines of the response.
+
+    :param int chunk_size: Chunk size to parse response with (default=10)
+    :param tuple(str) lines_to_ignore: Tuple of log messages to ignore.
+    """
+    if not self.stream:
+      return
 
     try:
-      json = self.response_obj.json() or {}
-    except:
-      pass
+      for line in resp.iter_lines(chunk_size=chunk_size):
+        if not line or line in lines_to_ignore:
+          continue
 
-    if not self.succeeded():
-      raise AbstractApiException(status=self.status,
-                                 code=json.get('code'),
-                                 error=json.get('error'))
-
-    return json
-
-
-class AbstractApiException(BaseException):
-  """
-  Generic but custom ApiException class
-  """
-  def __init__(self, status=None, code=None, error=None):
-    """
-    :param int status: Response status of request
-    :param int code: Custom error response code from response body
-    :param str error: Error message
-    """
-    self.status = status
-    self.code = code
-    self.error = error
-    self.message = 'Request returned error: {}'.format(self.error)
+        log(line)
+    except KeyboardInterrupt:
+      exit(0)
+    except BaseException as e:
+      log('Error while parsing logs: {}'.format(e))

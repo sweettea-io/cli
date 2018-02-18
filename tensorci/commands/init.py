@@ -3,7 +3,7 @@ import click
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
 from tensorci.utils import gitconfig
-from tensorci.utils.api import api, ApiException
+from tensorci.utils.api import api
 from tensorci.proj_config.config_file import ConfigFile
 
 
@@ -20,10 +20,10 @@ def init():
 
   Ex: tensorci init
   """
-  # Require authed user.
+  # Must already be logged in to perform this command..
   auth_required()
 
-  # Create a ConfigFile class instance to represent our config file
+  # Create a ConfigFile class instance to represent our config file.
   config = ConfigFile()
 
   # If the current directory already has a config file, tell the user and exit.
@@ -34,21 +34,23 @@ def init():
   # Find this git project's remote url from inside .git/config
   git_repo, err = gitconfig.get_remote_url()
 
-  # Error out if the remote git url couldn't be found.
+  # Error out if the remote git url wasn't found.
   if err:
     log(err)
     return
 
   try:
     # Register the git repo as a TensorCI repo (upsert)
-    api.post('/repo/register', payload={'git_url': git_repo})
+    resp = api.post('/repo/register', payload={'git_url': git_repo})
   except KeyboardInterrupt:
     return
-  except ApiException as e:
-    log(e.message)
+
+  # Log the error if the request failed.
+  if not resp.ok:
+    resp.log_error()
     return
 
-  # Add placeholders for the config file values
+  # Set placeholders for the config key.
   config.set_value('model', 'path/to/model/file')
   config.set_value('prepro_data', 'module1.module2:function')
   config.set_value('train', 'module1.module2:function')
@@ -59,4 +61,5 @@ def init():
   # Write the config file to the user's project.
   config.save()
 
-  log('Initialized new TensorCI project.\nGenerated new config file at {}'.format(config.FILE_NAME))
+  log('Initialized new TensorCI project.\n' +
+      'Generated new config file at {}'.format(config.FILE_NAME))

@@ -22,4 +22,7 @@ def serve():
 
   Ex: tensorci serve
   """
-  deploy(action='api')
+  try:
+    deploy(action='api')
+  except KeyboardInterrupt:
+    return

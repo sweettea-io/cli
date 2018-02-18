@@ -2,10 +2,9 @@ import click
 import os
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
-from tensorci.utils.api import api, ApiException
+from tensorci.utils.api import api
 from slugify import slugify
 from tensorci.helpers.multipart_request_helper import create_callback
-from tensorci.helpers.dynamic_response_helper import handle_error
 from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncoderMonitor
 from tensorci.utils import gitconfig
 
@@ -16,13 +15,12 @@ from tensorci.utils import gitconfig
 def dataset(name, file):
   """
   Create a TensorCI dataset from a JSON file.
-
-  The dataset will be associated with the TensorCI project
-  of the current working directory.
+  The dataset will be associated with the TensorCI project of the current working directory.
+  The dataset's name will default to the name of the project if not specified.
 
   Ex: tensorci create dataset -f mydataset.json
   """
-  # Require authed user
+  # Must already be logged in to perform this command.
   auth_required()
 
   # Find this git project's remote url from inside .git/config
@@ -37,48 +35,46 @@ def dataset(name, file):
   if name:
     dataset_slug = slugify(name, separator='-', to_lower=True)
   else:
-    # Default dataset slug will just be the repo name
+    # Default dataset slug will just be the repo name.
     dataset_slug = None
 
-  # Make sure file actually exists
+  # Make sure file actually exists.
   if not os.path.exists(file):
     log('No file found at path {}'.format(file))
     return
 
-  # Require dataset file to be JSON
+  # Require dataset file to be JSON.
   if not file.endswith('.json'):
     log('Dataset must be a JSON file (i.e. dataset.json)')
     return
 
-  # Build payload
+  # Build the payload.
   payload = {
     'git_url': git_repo,
     'dataset_slug': dataset_slug,
     'file': ('dataset.json', open(file, 'rb'), 'application/json')
   }
 
-  # Create a multipart encoder
+  # Create a multipart encoder.
   encoder = MultipartEncoder(fields=payload)
 
-  # Create progress callback
+  # Create progress callback.
   callback = create_callback(encoder)
 
-  # Create a monitor for the encoder so we can track upload progress
+  # Create a monitor for the encoder so we can track upload progress.
   monitor = MultipartEncoderMonitor(encoder, callback)
 
+  headers = {'Content-Type': monitor.content_type}
+
   try:
-    resp = api.post('/dataset',
-                    data=monitor,
-                    headers={'Content-Type': monitor.content_type},
-                    mp_upload=True)
+    # Upload the dataset.
+    resp = api.post('/dataset', headers=headers, mp_upload_monitor=monitor)
   except KeyboardInterrupt:
     return
-  except ApiException as e:
-    log(e.message)
-    return
 
-  if resp.status_code != 201:
-    handle_error(resp)
+  # Log the error if the upload failed.
+  if not resp.ok:
+    resp.log_error()
     return
 
   log('Successfully created dataset.')

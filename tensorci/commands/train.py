@@ -12,11 +12,12 @@ def train():
   .tensorci.yml are executed (in order):
 
   (1) prepro_data: preprocess this project's dataset for training
-
   (2) train: train a model
-
   (3) test (only if provided): test the performance of that model
 
   Ex: tensorci train
   """
-  deploy(action='train')
+  try:
+    deploy(action='train')
+  except KeyboardInterrupt:
+    return
