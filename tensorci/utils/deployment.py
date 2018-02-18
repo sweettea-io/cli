@@ -5,6 +5,13 @@ from tensorci.utils import gitconfig
 
 
 def deploy(action=None):
+  """
+  Perform a training deploy, API deploy, or both.
+
+  :param str action:
+    Deploy action to take.
+    Supported values: 'train', 'serve', and 'push'
+  """
   # Must already be logged in to perform this command.
   auth_required()
 
