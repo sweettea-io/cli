@@ -1,14 +1,35 @@
+"""
+  Helper methods related to the current operating system
+"""
 from sys import platform
+
+LINUX = 'linux'
+OSX = 'osx'
+WINDOWS = 'windows'
 
 
 def curr_platform():
-  if platform in ('linux', 'linux2'):
-    return 'linux'
+  """
+  Get a string identifying the current operating system in use.
 
-  if platform == 'darwin':
-    return 'osx'
+  Current supported return values:
+    - 'linux'
+    - 'osx'
+    - 'windows'
 
-  if platform in ('win32', 'cygwin'):
-    return 'windows'
+  :return: The operating system in use
+  :rtype: str
+  """
 
-  return None
+  return {
+    # Linux
+    'linux': LINUX,
+    'linux2': LINUX,
+
+    # Mac
+    'darwin': OSX,
+
+    # Windows
+    'win32': WINDOWS,
+    'cygwin': WINDOWS
+  }.get(platform)
