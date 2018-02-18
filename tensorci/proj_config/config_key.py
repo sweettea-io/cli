@@ -1,6 +1,6 @@
-import re
-from slugify import slugify
 from importlib import import_module
+from slugify import slugify
+from tensorci.helpers.url_helper import is_valid_url
 
 
 class ConfigKey(object):
@@ -86,14 +86,7 @@ class ConfigKey(object):
     :return: Whether this class's 'value' attribute is a valid url.
     :rtype: bool
     """
-    url_regex = re.compile(
-      r'^(?:http)s?://'  # http:// or https://
-      r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
-      r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-      r'(?::\d+)?'  # optional port
-      r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-
-    return re.match(url_regex, self.value) is not None
+    return is_valid_url(self.value)
 
   def mod_function_validator(self):
     """
