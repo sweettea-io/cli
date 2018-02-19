@@ -1,8 +1,8 @@
 import click
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
-from tensorci.utils.api import api
 from tensorci.utils import gitconfig
+from tensorci.utils.api import api
 
 
 @click.command()

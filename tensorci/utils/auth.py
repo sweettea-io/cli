@@ -2,9 +2,9 @@
 User-auth utilities file, exposing functions to get/create/delete a user's session.
 Uses native netrc file for storing a user's session token.
 """
-from tinynetrc import Netrc
 from tensorci import log
 from tensorci.config import config
+from tinynetrc import Netrc
 
 
 def create(password=None):

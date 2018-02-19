@@ -1,10 +1,10 @@
-import os
 import click
+import os
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
+from tensorci.proj_config.config_file import ConfigFile
 from tensorci.utils import gitconfig
 from tensorci.utils.api import api
-from tensorci.proj_config.config_file import ConfigFile
 
 
 @click.command()

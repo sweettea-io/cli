@@ -1,12 +1,12 @@
 import click
 import os
+from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncoderMonitor
+from slugify import slugify
 from tensorci import log
 from tensorci.helpers.auth_helper import auth_required
-from tensorci.utils.api import api
-from slugify import slugify
 from tensorci.helpers.multipart_request_helper import create_callback
-from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncoderMonitor
 from tensorci.utils import gitconfig
+from tensorci.utils.api import api
 
 
 @click.command()

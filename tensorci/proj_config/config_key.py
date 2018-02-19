@@ -42,9 +42,10 @@ class ConfigKey(object):
 
   def is_valid(self):
     """
-    Validate this class's 'value' attribute
+    Check if this class's 'value' attribute is valid
 
     :returns: Whether the value is considered "valid".
+    :rtype: bool
     """
     # If value isn't required and also isn't specified, it's automatically valid.
     if not self.required and not self.value:

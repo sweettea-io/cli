@@ -1,11 +1,11 @@
-import os
 import click
+import os
 import re
 from tensorci import log
-from tensorci.helpers import url_helper
-from tensorci.utils import gitconfig
-from tensorci.proj_config.config_file import ConfigFile
 from tensorci.config import config
+from tensorci.helpers import url_helper
+from tensorci.proj_config.config_file import ConfigFile
+from tensorci.utils import gitconfig
 from urlparse import urlparse
 
 

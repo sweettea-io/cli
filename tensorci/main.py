@@ -5,7 +5,7 @@ from commands import all_cmds
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
-# '$ tensorci' entrypoint
+# 'tensorci' entrypoint
 @click.group(context_settings=CONTEXT_SETTINGS)
 def cli():
   pass

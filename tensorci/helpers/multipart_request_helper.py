@@ -2,8 +2,8 @@
 Helper methods and classes related to multi-part file uploads or downloads
 """
 import os
-from tensorci import log
 from clint.textui.progress import Bar as ProgressBar
+from tensorci import log
 
 
 def create_callback(encoder, completion_log=None):
