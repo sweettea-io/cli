@@ -32,20 +32,40 @@ def env():
 
 
 def is_test():
-  """Are we testing?"""
+  """
+  Are we testing?
+
+  :returns: Whether this is a test environment
+  :rtype: bool
+  """
   return ENV == TEST
 
 
 def is_dev():
-  """Are we on a dev environment?"""
+  """
+  Are we on a dev environment?
+
+  :returns: Whether this is a dev environment
+  :rtype: bool
+  """
   return ENV == DEV
 
 
 def is_staging():
-  """Are we on staging?"""
+  """
+  Are we on staging?
+
+  :returns: Whether this is a staging environment
+  :rtype: bool
+  """
   return ENV == STAGING
 
 
 def is_prod():
-  """Are we on prod?"""
+  """
+  Are we on prod?
+
+  :returns: Whether this is a prod environment
+  :rtype: bool
+  """
   return ENV == PROD

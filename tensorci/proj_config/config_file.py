@@ -58,7 +58,7 @@ class ConfigFile(object):
     """
     Creates an ordered dict from the config's key-val pairs.
 
-    :return: 'OrderedDict' object
+    :return: 'OrderedDict' of config's key-val pairs.
     :rtype: collections.OrderedDict
     """
     d = OrderedDict()

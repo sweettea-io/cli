@@ -48,15 +48,51 @@ class AbstractApi(object):
     self.auth_header_val_getter = auth_header_val_getter
 
   def get(self, route, **kwargs):
+    """
+    Make a GET request to the given route
+
+    :param str route: Route to hit on top of 'self.base_url'
+    ** See 'self.make_request' for accepted kwargs params **
+
+    :return: an API response object
+    :rtype: AbstractApiResponse
+    """
     return self.make_request('get', route, **kwargs)
 
   def post(self, route, **kwargs):
+    """
+    Make a POST request to the given route
+
+    :param str route: Route to hit on top of 'self.base_url'
+    ** See 'self.make_request' for accepted kwargs params **
+
+    :return: an API response object
+    :rtype: AbstractApiResponse
+    """
     return self.make_request('post', route, **kwargs)
 
   def put(self, route, **kwargs):
+    """
+    Make a PUT request to the given route
+
+    :param str route: Route to hit on top of 'self.base_url'
+    ** See 'self.make_request' for accepted kwargs params **
+
+    :return: an API response object
+    :rtype: AbstractApiResponse
+    """
     return self.make_request('put', route, **kwargs)
 
   def delete(self, route, **kwargs):
+    """
+    Make a DELETE request to the given route
+
+    :param str route: Route to hit on top of 'self.base_url'
+    ** See 'self.make_request' for accepted kwargs params **
+
+    :return: an API response object
+    :rtype: AbstractApiResponse
+    """
     return self.make_request('delete', route, **kwargs)
 
   def make_request(self, method, route, payload=None, headers=None, stream=False,
@@ -81,7 +117,7 @@ class AbstractApi(object):
       Whether to log an error message if the request fails
     :param bool exit_on_error:
       Whether to exit if the request fails
-    :return: an api response object
+    :return: an API response object
     :rtype: AbstractApiResponse
     """
     # Get the proper method to call on the 'requests' object (get, post, put, or delete).
@@ -207,6 +243,7 @@ class AbstractApiResponse(object):
   def parse_json_resp(self):
     """
     Attempt to parse a JSON response, defaulting to an empty dict.
+
     :return: Parsed JSON response
     :rtype: dict or list (dict if error)
     """

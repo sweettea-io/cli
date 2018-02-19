@@ -15,12 +15,13 @@ def get_remote_url(remote='origin', required=True):
   :return: The git url for the given remote
   :rtype: str
   """
+  # Handle case where git remote url isn't found. What to do depends
+  # on whether this url is required to exist or not...
   def handle_not_found(err):
-    if required:
-      log(err)
-      exit(1)
-
-    return None
+    if not required:
+      return None
+    log(err)
+    exit(1)
 
   git_path = '{}/.git'.format(os.getcwd())
 
