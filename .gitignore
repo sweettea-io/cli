@@ -11,3 +11,4 @@ build/
 test.json
 data/
 bin/
+docs/build
