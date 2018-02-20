@@ -21,7 +21,7 @@ The TensorCI CLI is easiest way to interact with your TensorCI resources. It pro
 deploying models for training, downloading trained models, and serving model predictions from an API, among
 others.
 
-Assuming you have Python_ already, you can install the CLI using ``pip``::
+Assuming you have Python_ already, you can install the CLI with ``pip``::
 
   $ pip install tensorci
 
@@ -106,6 +106,9 @@ each value is required (if at all).
 
 Once you've modified this config file to integrate with your project, go ahead and push these changes up to GitHub.
 
+**Note:**  Now that you've created your TensorCI project, you can easily navigate to its web dashboard at any time by
+running ``tensorci dash`` from the root of your project.
+
 Congrats! That's all it takes to set up a TensorCI project. The last thing you need to do before you're ready to start
 training is `create a TensorCI Dataset`_ for this project. Once that's done, you'll be ready to `train your model`_ on
 the TensorCI training cluster.
@@ -115,10 +118,12 @@ Next Steps
 
 * `Create a dataset`_
 * `Train your model`_
+* `Host your model's predictions`_
 
 .. _Python: https://www.python.org/
 .. _`TensorCI home page`: https://www.tensorci.com
 .. _`this link`: https://app.tensorci.com/account/auth
-.. _`create a TensorCI Dataset`: /datasets.html#creating-a-dataset
-.. _`Create a dataset`: /datasets.html#creating-a-dataset
-.. _`train your model`: /training.html#model-training
+.. _`create a TensorCI Dataset`: /datasets.html
+.. _`Create a dataset`: /datasets.html
+.. _`train your model`: /training.html
+.. _`Host your model's predictions`: /predictions.html
