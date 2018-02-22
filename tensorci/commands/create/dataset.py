@@ -1,12 +1,12 @@
 import click
 import os
 from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncoderMonitor
-from slugify import slugify
 from tensorci import log
 from tensorci.helpers.multipart_request_helper import create_callback
 from tensorci.utils import gitconfig
 from tensorci.utils.api import api
 from tensorci.utils.auth import auth_required
+from tensorci.utils.slug import to_slug
 
 
 @click.command()
@@ -28,7 +28,7 @@ def dataset(name, file):
 
   # If dataset name was specified, slugify it.
   if name:
-    dataset_slug = slugify(name, separator='-', to_lower=True)
+    dataset_slug = to_slug(name)
   else:
     # Default dataset slug will just be the repo name.
     dataset_slug = None

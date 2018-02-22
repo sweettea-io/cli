@@ -1,6 +1,6 @@
 from importlib import import_module
-from slugify import slugify
 from tensorci.helpers.url_helper import is_valid_url
+from tensorci.utils.slug import to_slug
 
 
 class ConfigKey(object):
@@ -80,7 +80,7 @@ class ConfigKey(object):
     :return: Whether this class's 'value' attribute is equal to its slug counterpart.
     :rtype: bool
     """
-    return self.value == slugify(self.value, separator='-', to_lower=True)
+    return self.value == to_slug(self.value)
 
   def url_validator(self):
     """
