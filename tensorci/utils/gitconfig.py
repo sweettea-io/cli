@@ -54,4 +54,7 @@ def get_remote_url(remote='origin', required=True):
   except BaseException:
     return handle_not_found('Error determining remote origin url...make sure you have a git remote origin set up.')
 
+  if not url.endswith('.git'):
+    url += '.git'
+
   return str(url)
