@@ -299,7 +299,7 @@ class AbstractApiResponse(object):
       return
 
     try:
-      for line in resp.iter_lines(chunk_size=chunk_size):
+      for line in self.response_obj.iter_lines(chunk_size=chunk_size):
         if not line or line in lines_to_ignore:
           continue
 
