@@ -2,59 +2,87 @@
 Helper methods related to files or their respective paths
 """
 import os
+import zipfile
+from tensorci import log
 
 
-def path_to_components(path):
+def create_model_save_path(path, download_ext):
   """
-  Split a file path into it's respective components:
-    - Directory
-    - Filename
-    - File extension
+  Create path to save a model to.
+  Validate the provided and desired extensions are compatible.
 
-  :param str path: File path
-  :return: Components of file path: directory, filename, and file extension, respectively.
-  :rtype: tuple(str, str, str)
-  """
-  comps = path.split('/')
-  filename_with_ext = comps.pop()
-  direc = '/'.join(comps) or None
-
-  if '.' in filename_with_ext:
-    file_comps = filename_with_ext.split('.')
-    ext = file_comps.pop()
-    filename = '.'.join(file_comps)
-  else:
-    ext = None
-    filename = filename_with_ext
-
-  return direc, filename, ext
-
-
-def add_ext(filename, ext):
-  """
-  Add an extension to a filename if the extension exists
-
-  :param str filename: Name of the file
-  :param str ext: Potential extension of the file
-  :return: Filename + extension
+  :param str path: Desired model path (either filename or directory)
+  :param str download_ext: File extension of downloaded model content
+  :return: Path to save model to.
   :rtype: str
   """
-  if not ext:
-    return filename
+  archive = 'zip'  # All model folders should be downloaded as zip files.
 
-  return '{}.{}'.format(filename, ext)
+  # Check if the specified model path is a directory
+  is_dir = path.endswith('/') or ('.' not in path.split('/').pop())
+
+  # Ensure downloaded file is a zip file if model path is a directory
+  if is_dir:
+    if download_ext != archive:
+      log('Can\'t download model -- Specified model path was a directory, '
+          'but downloaded model not a {} file.'.format(archive))
+      exit(1)
+
+    save_to = '.'.join((path.rstrip('/'), archive))
+  else:
+    ext = path.split('/').pop().split('.').pop()
+
+    # If model is a file (not a dir), ensure its ext matches the downloaded file ext.
+    if ext != download_ext:
+      log('Can\'t donwload model -- Expected type: {}; Actual type: {}'.format(ext, download_ext))
+      exit(1)
+
+    save_to = path
+
+  return save_to
 
 
-def filenames_with_ext(direc, ext):
+def upsert_parent_dirs(filepath):
   """
-  For a given directory, return a map of all filenames with a given extension.
+  Similar to os.makedirs, but ignores filename and doesn't raise an error when
+  a directory is already in existence...it just skips it.
 
-  :param str direc: The directory to list files for
-  :param str ext: The extension to look for
-  :return: A map of all filenames with the given extension
-  :rtype: dict
+  :param str filepath: File path to upsert all parent directories for
   """
-  if not ext:
-    return {}
+  comps = [c for c in filepath.split('/') if c]
+  comps.pop()
 
-  return {n: True for n in os.listdir(direc) if n.endswith('.{}'.format(ext))}
+  if filepath.startswith('/'):
+    path = '/'
+  else:
+    path = ''
+
+  for dir in comps:
+    path += (dir + '/')
+
+    if not os.path.exists(path):
+      os.mkdir(path)
+
+
+def extract_in_place(archive_path):
+  """
+  Unpack a zipfile in place.
+
+  Ex:
+    extract_in_place('path/to/archive.zip')
+    # => creates 'path/to/archive/' directory
+
+  :param str archive_path: Path to zipfile
+  :return: Path to directory where zipfile contents were extrcted
+  :rtype: str
+  """
+  # Create path to directory to extract archive to
+  filename_w_ext = archive_path.split('/').pop()
+  extract_dir = archive_path[:-(len(filename_w_ext))]
+
+  # Unpack the archive
+  archive = zipfile.ZipFile(archive_path)
+  archive.extractall(extract_dir)
+  archive.close()
+
+  return extract_dir

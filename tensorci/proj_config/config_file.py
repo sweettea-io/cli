@@ -27,7 +27,7 @@ class ConfigFile(object):
     The initialization params represent the keys of the config file:
 
     :param str path: Absolute path to the config file
-    :param str model: Relative path to where the model file lives or will live
+    :param str model: Relative path to where the model file (or directory) lives or will live
     :param str prepro_data: Function path that preprocesses the raw dataset before training
     :param str train: Function path that trains the model
     :param str test: Function path that tests/evaluates the trained model
