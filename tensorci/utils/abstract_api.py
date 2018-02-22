@@ -1,5 +1,6 @@
 import requests
 from tensorci import log
+from tensorci.definitions import tci_keep_alive
 
 
 class AbstractApi(object):
