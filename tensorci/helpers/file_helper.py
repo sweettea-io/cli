@@ -81,7 +81,7 @@ def extract_in_place(archive_path):
   filename_w_ext = archive_path.split('/').pop()        # model.zip
   ext = filename_w_ext.split('.').pop()                 # zip
   filename = filename_w_ext[:-(len(ext) + 1)]           # model
-  extract_dir = archive_path[:-(len(filename_w_ext))]   # /path/to/
+  # extract_dir = archive_path[:-(len(filename_w_ext))]   # /path/to/
   dest_dir = os.path.join(extract_dir, filename)        # /path/to/model
 
   # Remove the destination dir if it already exists
@@ -90,10 +90,10 @@ def extract_in_place(archive_path):
 
   # Unpack the archive
   archive = zipfile.ZipFile(archive_path)
-  archive.extractall(extract_dir)
+  archive.extractall(d)
   archive.close()
 
   # Remove the archive file
   os.remove(archive_path)
 
-  return extract_dir
+  return dest_dir
