@@ -1,7 +1,5 @@
 import click
 import os
-import shutil
-from requests_toolbelt.downloadutils import stream
 from tensorci import log
 from tensorci.helpers.file_helper import create_model_save_path, upsert_parent_dirs, extract_in_place
 from tensorci.helpers.multipart_request_helper import ProgressDownloadStream
