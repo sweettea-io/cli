@@ -74,15 +74,13 @@ def extract_in_place(archive_path):
     # => creates 'path/to/archive/' directory
 
   :param str archive_path: Path to zipfile
-  :return: Path to directory where zipfile contents were extrcted
+  :return: Path to directory where zipfile contents were extracted
   :rtype: str
   """
   # Comments using values from example of archive_path='/path/to/model.zip
   filename_w_ext = archive_path.split('/').pop()        # model.zip
   ext = filename_w_ext.split('.').pop()                 # zip
-  # filename = filename_w_ext[:-(len(ext) + 1)]           # model
   extract_dir = archive_path[:-(len(ext) + 1)]          # /path/to/model
-  # dest_dir = os.path.join(extract_dir, filename)        # /path/to/model
 
   # Remove the destination dir if it already exists
   if os.path.exists(extract_dir) and os.path.isdir(extract_dir):
