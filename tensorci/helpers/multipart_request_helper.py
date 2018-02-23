@@ -77,8 +77,9 @@ class ProgressDownloadStream(object):
 
     :param str path: Desired file path
     """
-    # Ensure file doesn't already exist at given path.
-    assert not os.path.exists(path), 'File already exists at path: {}'.format(path)
+    # Using default state of files being overwritten for now
+    if os.path.exists(path):
+      os.remove(path)
 
     # Stream downloaded contents to file and show progress
     with open(path, 'wb') as f:
