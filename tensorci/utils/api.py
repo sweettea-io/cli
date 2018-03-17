@@ -2,9 +2,9 @@
 TensorCI API client
 """
 import os
-from abstract_api import AbstractApi
 from tensorci.config import config
 from tensorci.definitions import auth_header_name
+from tensorci.utils.abstract_api import AbstractApi
 from tensorci.utils.auth import get_password
 
 # Configure a TensorCI API client

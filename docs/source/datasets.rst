@@ -1,7 +1,7 @@
 Datasets
 ========
 
-In order for the TensorCI training cluster to train a model on your data, the cluster needs a location where it
+In order for the TensorCI training cluster to train a model on your data, it first needs a location where it
 can access that data in a fast and reliable manner. To achieve this, datasets uploaded to TensorCI are converted into
 tables in a cloud database. This not only makes your data easily accessible from the training cluster, but it also
 allows your data to live in one specific location that easily handles updates via an API as new data accumulates over time.
@@ -21,3 +21,12 @@ selecting your project. The dataset should be listed, along with when it was cre
 has, and a button for previewing its first 5 records. There will also be a dropdown where you can specify your dataset's
 **Retrain Step Size** -- the number of new records added to the dataset at which your model will automatically start
 retraining.
+
+Next Steps
+----------
+
+* `Train your model`_
+* `Host your model's predictions`_
+
+.. _`train your model`: /training.html
+.. _`Host your model's predictions`: /predictions.html

@@ -1,5 +1,5 @@
 import os
-from utils.env import env
+from tensorci.utils.env import env
 
 
 class Config:

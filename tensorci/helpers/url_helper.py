@@ -2,10 +2,10 @@
 Helper methods related to all-things URL
 """
 import os
-import os_helper
 import re
 import webbrowser
 from tensorci import log
+from tensorci.helpers import os_helper
 
 
 def open_url(url):

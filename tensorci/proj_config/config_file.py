@@ -1,8 +1,8 @@
 import os
 import yaml
 from collections import OrderedDict
-from config_key import ConfigKey
 from tensorci import log
+from tensorci.proj_config.config_key import ConfigKey
 
 
 class ConfigFile(object):

@@ -11,19 +11,21 @@ Before doing anything else, you will need to create a TensorCI account. Doing th
 just visit the `TensorCI home page`_ and sign up with GitHub.
 
 Once you've signed in, you should be taken to the TensorCI dashboard and prompted to create a basic auth password.
-This password is required in order to log into the TensorCI CLI. If you're not automatically prompted to do this on
-your first dashboard visit, you can use `this link`_.
+This password is required in order to login to the TensorCI CLI. If you're not automatically prompted to do this on
+your first visit to the dashboard, you can use `this link`_ instead.
 
 Install the CLI
 ---------------
 
-The TensorCI CLI is easiest way to interact with your TensorCI resources. It provides commands for creating datasets,
-deploying models for training, downloading trained models, and serving model predictions from an API, among
+The TensorCI CLI is the easiest way to interact with your TensorCI resources. It provides commands for creating datasets,
+deploying your models for training, downloading your trained models, and serving model predictions from your TensorCI API, among
 others.
 
 Assuming you have Python_ already, you can install the CLI with ``pip``::
 
   $ pip install tensorci
+
+**Note:** ``sudo`` might be required in order to install the ``tensorci`` executable to the proper path.
 
 Login from the CLI
 -------------------
@@ -36,7 +38,7 @@ GitHub username and the basic auth password you created from the dashboard::
 Create a New Project
 --------------------
 
-To register your git repo as a TensorCI project, navigate to your project's directory and run::
+To register your git repo as a TensorCI project, navigate to your project's directory, and run::
 
   $ tensorci init
 
@@ -54,7 +56,7 @@ This will create a ``.tensorci.yml`` config file in the root of your project wit
   predict: module1.module2:function
   reload_model: module1.module2:function
 
-These config values will need to be modified to fit your project, but not all of them need to be set to train your
+These config values will need to be modified to fit your project, but not all of them need to be set in order to simply train your
 first model. The table below describes these config values in more depth, gives examples for each, and explains when
 each value is required (if at all).
 
@@ -106,7 +108,7 @@ each value is required (if at all).
 
 Once you've modified this config file to integrate with your project, go ahead and push these changes up to GitHub.
 
-**Note:**  Now that you've created your TensorCI project, you can easily navigate to its web dashboard at any time by
+**Note:**  Now that you've created your TensorCI project, you can easily navigate to its web dashboard counterpart at any time by
 running ``tensorci dash`` from the root of your project.
 
 Congrats! That's all it takes to set up a TensorCI project. The last thing you need to do before you're ready to start
