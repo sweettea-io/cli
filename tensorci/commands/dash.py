@@ -1,12 +1,17 @@
 import click
 import os
 import re
+import sys
 from tensorci import log
 from tensorci.config import config
 from tensorci.helpers import url_helper
 from tensorci.proj_config.config_file import ConfigFile
 from tensorci.utils import gitconfig
-from urlparse import urlparse
+
+if sys.version_info[0] < 3:
+  from urlparse import urlparse
+else:
+  from urllib.parse import urlparse
 
 
 @click.command()
