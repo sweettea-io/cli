@@ -1,6 +1,6 @@
 # TensorCI CLI
 
-[View Docs](https://docs.tensorci.com)
+[View Docs](http://docs.tensorci.com)
 
 # License
 
