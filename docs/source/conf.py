@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'TensorCI'
-copyright = u'2018, Ben Whittle'
+copyright = u'2018, TensorCI'
 author = u'Ben Whittle'
 
 # The short X.Y version

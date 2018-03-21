@@ -16,3 +16,7 @@
 .icon.icon-home:before {
   display: none;
 }
+
+.ethical-rtd {
+  display: none !important;
+}
