@@ -12,13 +12,13 @@ Assuming you have Python_ already, this library can be installed with ``pip``::
 
 Fetch Model Predictions
 -----------------------
-Once you've `deployed a trained model`_ to your team's TensorCI API Cluster, fetching model predictions involves the following
+Once you've `deployed a trained model`_ to your team's TensorCI API cluster, fetching that model's predictions involves the following
 3 steps:
 
 **1.Obtaining API Credentials**
 
-Each TensorCI project comes with its own client ID and client secret to secure its hosted model predictions. These can be found
-on the TensorCI Dashboard at ``https://app.tensorci.com/<TEAM_SLUG>/<PROJECT_SLUG>/settings``.
+Each TensorCI project comes with its own **Client ID** and **Client Secret** to secure its hosted model predictions.
+These credentials can be found on the TensorCI Dashboard at ``https://app.tensorci.com/<TEAM_SLUG>/<PROJECT_SLUG>/settings``.
 
 **2. Setting API Credentials as Environment Variables**
 
@@ -32,7 +32,7 @@ model predictions from:
 
 **3. Initializing the TensorCI Client**
 
-Once you've set the above environment variables, live model predictions can be fetched in the following manner::
+Once you've set the above environment variables, model predictions can be fetched in the following manner::
 
   from tensorci import TensorCI
 

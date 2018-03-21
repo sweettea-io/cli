@@ -10,3 +10,4 @@ Welcome to TensorCI
    training
    predictions
    api_client
+   envs

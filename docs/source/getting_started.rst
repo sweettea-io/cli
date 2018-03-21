@@ -29,7 +29,7 @@ Login from the CLI
 -------------------
 
 Now that you have the ``tensorci`` command-line tool, you should be able to login to your TensorCI account using your
-GitHub username and the basic auth password you created from the dashboard::
+GitHub username and the basic auth password you just created::
 
   $ tensorci login
 
@@ -42,16 +42,15 @@ To register your git repo as a TensorCI project, navigate to your project's dire
 
 This will create a ``.tensorci.yml`` config file in the root of your project with the following contents::
 
+  #
   # Python TensorCI configuration file
   #
-  # Visit https://www.tensorci.com/docs for more details.
-  #
-  model: path/to/model/file
-  prepro_data: module1.module2:function
-  train: module1.module2:function
-  test: module1.module2:function
-  predict: module1.module2:function
-  reload_model: module1.module2:function
+  model:         path/to/model/file
+  prepro_data:   module1.module2:function
+  train:         module1.module2:function
+  test:          module1.module2:function
+  predict:       module1.module2:function
+  reload_model:  module1.module2:function
 
 These config values will need to be modified to fit your project, but not all of them need to be set in order to simply train your
 first model. The table below describes these config values in more depth, gives examples for each, and explains when
@@ -67,9 +66,9 @@ each value is required (if at all).
     - Required For
   * - ``model``
     - .. line-block::
-        Relative path to save model to
-        and read model from
-    - ``data/model.pkl``
+        Relative path to save model to and read
+        model from
+    - ``data/model/``
     - Always
   * - ``prepro_data``
     - .. line-block::
@@ -98,8 +97,8 @@ each value is required (if at all).
   * - ``reload_model``
     - .. line-block::
         Path to module function used to reload
-        latest model into memory after swapping
-        out old model file
+        latest model into memory when swapping
+        out old model
     - ``src.model:reload``
     - Predictions
 
@@ -109,7 +108,7 @@ Once you've modified this config file to integrate with your project, go ahead a
 running ``tensorci dash`` from the root of your project.
 
 Congrats! That's all it takes to set up a TensorCI project. The last thing you need to do before you're ready to start
-training is `create a TensorCI Dataset`_ for this project. Once that's done, you'll be ready to `train your model`_ on
+training is `create a TensorCI Dataset`_. Once that's done, you'll be ready to `train your model`_ on
 the TensorCI training cluster.
 
 Next Steps

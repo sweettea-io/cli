@@ -8,7 +8,7 @@ Once you've `created a dataset`_, training your model on the TensorCI training c
 Running the ``train`` command deploys the latest commit of your project's git repo to the TensorCI training cluster.
 Once deployed, the following steps are performed, in order:
 
-1. All records in your project's dataset are fetched from its TensorCI database.
+1. All records in your project's dataset are fetched from its TensorCI datatable.
 2. If specified, the ``prepro_data`` function specified in ``.tensorci.yml`` is called if the dataset has changed.
 3. The ``train`` function specified in ``.tensorci.yml`` is called.
 4. If specified, the ``test`` function specified in ``.tensorci.yml`` is called.
@@ -16,7 +16,7 @@ Once deployed, the following steps are performed, in order:
 
 Watch Training Logs
 -------------------
-Once a training deploy has completed, viewing the logs for steps 2-4 above in real-time can be achieved with the following
+Once a training deploy has succeeded, watching the real-time logs for steps 2-4 above can be initiated with the following
 command::
 
   $ tensorci logs --follow

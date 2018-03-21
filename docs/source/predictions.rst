@@ -6,8 +6,8 @@ predictions behind a secure, production-ready websocket::
 
   $ tensorci serve
 
-Running the ``serve`` command deploys the commit associated with your latest training deploy to your TensorCI team's
-dedicated API cluster. Once this deploy succeeds, your trained model is fetched from TensorCI model storage and
+Running the ``serve`` command deploys the commit associated with your latest training deploy to your team's API cluster.
+Once this deploy succeeds, your trained model is fetched from TensorCI model storage and
 the ``predict`` function specified in ``.tensorci.yml`` is registered with the websocket server.
 
 Full Deploys
