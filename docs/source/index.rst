@@ -9,3 +9,4 @@ Welcome to TensorCI
    datasets
    training
    predictions
+   api_client

@@ -25,8 +25,6 @@ Assuming you have Python_ already, you can install the CLI with ``pip``::
 
   $ pip install tensorci
 
-**Note:** ``sudo`` might be required in order to install the ``tensorci`` executable to the proper path.
-
 Login from the CLI
 -------------------
 
@@ -41,7 +39,6 @@ Create a New Project
 To register your git repo as a TensorCI project, navigate to your project's directory, and run::
 
   $ tensorci init
-
 
 This will create a ``.tensorci.yml`` config file in the root of your project with the following contents::
 

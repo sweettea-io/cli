@@ -6,7 +6,7 @@ can access that data in a fast and reliable manner. To achieve this, datasets up
 tables in a cloud database. This not only makes your data easily accessible from the training cluster, but it also
 allows your data to live in one specific location that easily handles updates via an API as new data accumulates over time.
 
-Creating a Dataset
+Create a Dataset
 ------------------
 
 To create a TensorCI dataset for your project, navigate to the root of your project and run the following command::
