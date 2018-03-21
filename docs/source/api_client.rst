@@ -12,7 +12,7 @@ Assuming you have Python_ already, this library can be installed with ``pip``::
 
 Fetch Model Predictions
 -----------------------
-Once you've `deployed a trained model`_ to your team's TensorCI API cluster, fetching that model's predictions involves the following
+Once you've :doc:`deployed a trained model<./predictions>` to your team's TensorCI API cluster, fetching that model's predictions involves the following
 3 steps:
 
 **1.Obtaining API Credentials**
@@ -49,4 +49,3 @@ Once you've set the above environment variables, model predictions can be fetche
 
 .. _Python: https://www.python.org/
 .. _`TensorCI API Client`: https://github.com/tensorci/tensorci-client
-.. _`deployed a trained model`: /predictions.html

@@ -108,19 +108,16 @@ Once you've modified this config file to integrate with your project, go ahead a
 running ``tensorci dash`` from the root of your project.
 
 Congrats! That's all it takes to set up a TensorCI project. The last thing you need to do before you're ready to start
-training is `create a TensorCI Dataset`_. Once that's done, you'll be ready to `train your model`_ on
+training is :doc:`create a TensorCI Dataset<./datasets>`. Once that's done, you'll be ready to :doc:`train your model<./training>` on
 the TensorCI training cluster.
 
 Next Steps
 ----------
 
-* :doc:`Create a dataset <./datasets>`
-* `Train your model`_
-* `Host your model's predictions`_
+* :doc:`Create a dataset<./datasets>`
+* :doc:`Train your model<./training>`
+* :doc:`Host your model's predictions<./predictions>`
 
 .. _`Python`: https://www.python.org/
 .. _`TensorCI home page`: https://www.tensorci.com
 .. _`this link`: https://app.tensorci.com/account/auth
-.. _`create a TensorCI Dataset`: /datasets.html
-.. _`train your model`: /training.html
-.. _`Host your model's predictions`: /predictions.html

@@ -24,8 +24,5 @@ retraining.
 Next Steps
 ----------
 
-* `Train your model`_
-* `Host your model's predictions`_
-
-.. _`train your model`: /training.html
-.. _`Host your model's predictions`: /predictions.html
+* :doc:`Train your model<./training>`
+* :doc:`Host your model's predictions<./predictions>`

@@ -1,7 +1,7 @@
 Hosting Predictions
 ===================
 
-Once you've `trained your model`_ on the training cluster, one command is all it takes to host your model's
+Once you've :doc:`trained your model<./training>` on the training cluster, one command is all it takes to host your model's
 predictions behind a secure, production-ready websocket::
 
   $ tensorci serve
@@ -22,7 +22,4 @@ Next Steps
 ----------
 
 Now that your model's predictions are being hosted from a websocket server, its predictions can be fetched with the
-`TensorCI API Client Library`_.
-
-.. _`trained your model`: /training.html
-.. _`TensorCI API Client Library`: /api_client.html
+:doc:`TensorCI API Client Library<./api_client>`.

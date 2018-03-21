@@ -1,7 +1,7 @@
 Model Training
 ==============
 
-Once you've `created a dataset`_, training your model on the TensorCI training cluster is easy::
+Once you've :doc:`created a dataset<./datasets>`, training your model on the TensorCI training cluster is easy::
 
   $ tensorci train
 
@@ -36,8 +36,4 @@ provided to specify another path.
 Next Steps
 ----------
 
-* `Host your model's predictions`_
-
-.. _`Host your model's predictions`: /predictions.html
-.. _`created a dataset`: /datasets.html
-
+* :doc:`Host your model's predictions<./predictions>`
