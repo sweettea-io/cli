@@ -114,14 +114,13 @@ the TensorCI training cluster.
 Next Steps
 ----------
 
-* `Create a dataset`_
+* :doc:`Create a dataset <./datasets>`
 * `Train your model`_
 * `Host your model's predictions`_
 
-.. _Python: https://www.python.org/
+.. _`Python`: https://www.python.org/
 .. _`TensorCI home page`: https://www.tensorci.com
 .. _`this link`: https://app.tensorci.com/account/auth
 .. _`create a TensorCI Dataset`: /datasets.html
-.. _`Create a dataset`: /datasets.html
 .. _`train your model`: /training.html
 .. _`Host your model's predictions`: /predictions.html
