@@ -1,8 +1,11 @@
 Welcome to TensorCI
 ===================
 
-`TensorCI`_ is Continuous Integration for machine learning. It simplifies the process of managing datasets,
-training models, and hosting those models from behind an API, all on a continuous basis as new data comes in over time.
+`TensorCI`_ brings Continuous Integration to machine learning. It orchestrates the process of managing datasets,
+training and evaluating models, and then deploying those models to an API to serve predictions -- all with simple commands.
+
+Offloading the continuous cycle of **training --> testing --> predicting --> repeat** as your algorithm develops or new data accumulates
+over time allows for more focus on your algorithm and less on managing systems overhead.
 
 .. toctree::
    :maxdepth: 2
