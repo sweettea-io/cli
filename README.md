@@ -1,6 +1,4 @@
-# TensorCI CLI
-
-[View Docs](http://docs.tensorci.com)
+# SweetTea CLI
 
 # License
 
