@@ -7,6 +7,7 @@ class Config:
   """
   def __init__(self):
     self.DEBUG = os.environ.get('DEBUG', True)
-    self.API_URL = os.environ.get('API_URL', 'https://api.sweettea.io')
+    self.DOMAIN = os.environ.get('DOMAIN', 'api.sweettea.io')
+    self.API_URL = os.environ.get('API_URL', 'https://{}'.format(self.DOMAIN))
 
 config = Config()

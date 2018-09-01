@@ -17,13 +17,8 @@ def create(password=None):
 
   :param str password: Session token
   """
-  # Get the native netrc file.
   netrc = Netrc()
-
-  # Upsert domain/password group
   netrc[config.DOMAIN]['password'] = password
-
-  # Save dat bish.
   netrc.save()
 
 
@@ -76,6 +71,6 @@ def auth_required():
   """Check if user is authed and exit if not"""
   if not authed():
     log('You must be logged in to perfom that action.\n'
-        'Use \'tensorci login\' if you already have an account, or visit '
-        'https://tensorci.com to create a new account.')
+        'Use \'st login\' if you already have an account, or message your '
+        'administrator to create an account for you on SweetTea.')
     exit(1)
