@@ -6,10 +6,10 @@ from sweettea.utils import auth
 @click.command()
 def logout():
   """
-  Logout of TensorCI.
+  Logout of SweetTea.
 
-  Ex: tensorci logout
+  Ex: $ st logout
   """
-  # Remove authed session from netrc
+  # Remove authed session from netrc.
   auth.delete()
   log('Successfully logged out.')

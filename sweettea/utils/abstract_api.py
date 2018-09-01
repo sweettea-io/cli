@@ -41,7 +41,7 @@ class AbstractApi(object):
     :param str auth_header_val: Value of authorization header (overwritten by auth_header_val_getter)
     :param function auth_header_val_getter: Function that returns the value of the authorization header
     """
-    self.base_url = base_url
+    self.base_url = base_url.rstrip('/')
     self.base_headers = base_headers or {}
     self.auth_header_name = auth_header_name
     self.auth_header_val = auth_header_val
