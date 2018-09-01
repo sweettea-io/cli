@@ -1,12 +1,12 @@
 import click
 import os
-from tensorci import log
-from tensorci.helpers.file_helper import create_model_save_path, upsert_parent_dirs, extract_in_place
-from tensorci.helpers.multipart_request_helper import ProgressDownloadStream
-from tensorci.proj_config.config_file import ConfigFile
-from tensorci.utils import gitconfig
-from tensorci.utils.api import api
-from tensorci.utils.auth import auth_required
+from sweettea import log
+from sweettea.helpers.file_helper import create_model_save_path, upsert_parent_dirs, extract_in_place
+from sweettea.helpers.multipart_request_helper import ProgressDownloadStream
+from sweettea.proj_config.config_file import ConfigFile
+from sweettea.utils import gitconfig
+from sweettea.utils.api import api
+from sweettea.utils.auth import auth_required
 
 
 @click.command()

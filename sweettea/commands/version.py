@@ -1,6 +1,6 @@
 import click
-from tensorci import log
-from tensorci.version import version as v
+from sweettea import log
+from sweettea.version import version as v
 
 
 @click.command()

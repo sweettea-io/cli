@@ -1,12 +1,12 @@
 import click
 import os
 from requests_toolbelt.multipart.encoder import MultipartEncoder, MultipartEncoderMonitor
-from tensorci import log
-from tensorci.helpers.multipart_request_helper import create_callback
-from tensorci.utils import gitconfig
-from tensorci.utils.api import api
-from tensorci.utils.auth import auth_required
-from tensorci.utils.slug import to_slug
+from sweettea import log
+from sweettea.helpers.multipart_request_helper import create_callback
+from sweettea.utils import gitconfig
+from sweettea.utils.api import api
+from sweettea.utils.auth import auth_required
+from sweettea.utils.slug import to_slug
 
 
 @click.command()

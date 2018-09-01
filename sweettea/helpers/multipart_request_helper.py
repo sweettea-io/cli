@@ -3,7 +3,7 @@ Helper methods and classes related to multi-part file uploads or downloads
 """
 import os
 from clint.textui.progress import Bar as ProgressBar
-from tensorci import log
+from sweettea import log
 
 
 def create_callback(encoder, completion_log=None):

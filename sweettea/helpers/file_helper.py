@@ -4,7 +4,7 @@ Helper methods related to files or their respective paths
 import os
 import shutil
 import zipfile
-from tensorci import log
+from sweettea import log
 
 
 def create_model_save_path(path, download_ext):

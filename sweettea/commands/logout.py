@@ -1,6 +1,6 @@
 import click
-from tensorci import log
-from tensorci.utils import auth
+from sweettea import log
+from sweettea.utils import auth
 
 
 @click.command()

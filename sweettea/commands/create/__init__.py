@@ -1,5 +1,5 @@
 import click
-from tensorci.commands.create.dataset import dataset
+from sweettea.commands.create.dataset import dataset
 
 
 @click.group()

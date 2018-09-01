@@ -2,11 +2,11 @@ import click
 import os
 import re
 import sys
-from tensorci import log
-from tensorci.config import config
-from tensorci.helpers import url_helper
-from tensorci.proj_config.config_file import ConfigFile
-from tensorci.utils import gitconfig
+from sweettea import log
+from sweettea.config import config
+from sweettea.helpers import url_helper
+from sweettea.proj_config.config_file import ConfigFile
+from sweettea.utils import gitconfig
 
 if sys.version_info[0] < 3:
   from urlparse import urlparse

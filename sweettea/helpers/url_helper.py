@@ -4,8 +4,8 @@ Helper methods related to all-things URL
 import os
 import re
 import webbrowser
-from tensorci import log
-from tensorci.helpers import os_helper
+from sweettea import log
+from sweettea.helpers import os_helper
 
 
 def open_url(url):

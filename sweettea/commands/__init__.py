@@ -1,14 +1,14 @@
-from tensorci.commands.create import create
-from tensorci.commands.dash import dash
-from tensorci.commands.get import get
-from tensorci.commands.init import init
-from tensorci.commands.login import login
-from tensorci.commands.logout import logout
-from tensorci.commands.logs import logs
-from tensorci.commands.push import push
-from tensorci.commands.serve import serve
-from tensorci.commands.train import train
-from tensorci.commands.version import version
+from sweettea.commands.create import create
+from sweettea.commands.dash import dash
+from sweettea.commands.get import get
+from sweettea.commands.init import init
+from sweettea.commands.login import login
+from sweettea.commands.logout import logout
+from sweettea.commands.logs import logs
+from sweettea.commands.push import push
+from sweettea.commands.serve import serve
+from sweettea.commands.train import train
+from sweettea.commands.version import version
 
 all_cmds = [
   create,

@@ -2,8 +2,8 @@
 User-auth utilities file, exposing functions to get/create/delete a user's session.
 Uses native netrc file for storing a user's session token.
 """
-from tensorci import log
-from tensorci.config import config
+from sweettea import log
+from sweettea.config import config
 from tinynetrc import Netrc
 
 

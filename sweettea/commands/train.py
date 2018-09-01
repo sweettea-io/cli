@@ -1,5 +1,5 @@
 import click
-from tensorci.utils.deployment import deploy
+from sweettea.utils.deployment import deploy
 
 
 @click.command()

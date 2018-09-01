@@ -1,8 +1,8 @@
 import click
-from tensorci import log
-from tensorci.utils import gitconfig
-from tensorci.utils.api import api
-from tensorci.utils.auth import auth_required
+from sweettea import log
+from sweettea.utils import gitconfig
+from sweettea.utils.api import api
+from sweettea.utils.auth import auth_required
 
 
 @click.command()

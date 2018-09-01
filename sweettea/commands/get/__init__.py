@@ -1,5 +1,5 @@
 import click
-from tensorci.commands.get.model import model
+from sweettea.commands.get.model import model
 
 
 @click.group()

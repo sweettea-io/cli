@@ -1,6 +1,6 @@
 from importlib import import_module
-from tensorci.helpers.url_helper import is_valid_url
-from tensorci.utils.slug import to_slug
+from sweettea.helpers.url_helper import is_valid_url
+from sweettea.utils.slug import to_slug
 
 
 class ConfigKey(object):

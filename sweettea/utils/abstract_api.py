@@ -1,5 +1,5 @@
 import requests
-from tensorci import log
+from sweettea import log
 
 
 class AbstractApi(object):

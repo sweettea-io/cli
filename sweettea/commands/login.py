@@ -1,8 +1,8 @@
 import click
-from tensorci import log
-from tensorci.definitions import auth_header_name
-from tensorci.utils import auth
-from tensorci.utils.api import api
+from sweettea import log
+from sweettea.definitions import auth_header_name
+from sweettea.utils import auth
+from sweettea.utils.api import api
 
 
 @click.command()
