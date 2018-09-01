@@ -8,6 +8,6 @@ def version():
   """
   Show the current CLI version.
 
-  Ex: st version
+  Ex: $ st version
   """
   log(v)
