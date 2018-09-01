@@ -3,7 +3,7 @@ import os
 from sweettea import log
 from sweettea.definitions import *
 from sweettea.helpers.file_helper import config_file_path
-from sweettea.proj_config.config_file import ConfigFile
+from sweettea.proj_config import config
 from sweettea.utils import gitconfig
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
@@ -38,29 +38,28 @@ def init():
     api.post('/project', payload={'nsp': git_repo})
   except KeyboardInterrupt:
     return
-  
-  # Create a ConfigFile instance with default placeholder values for the user.
-  config = ConfigFile(
-    training=dict(
-      buildpack=train_buildpacks[0],
-      train='mod1.mod2.train_func_name',
-      test='mod1.mod2.test_func_name',
-      eval='mod1.mod2.eval_func_name',
-      model=dict(
-        path='rel/path/to/model/dest',
-        upload_criteria='always'
-      )
-    ),
-    hosting=dict(
-      buildpack=api_buildpacks[0],
-      predict='mod1.mod2.predict_func_name',
-      model=dict(
-        path='rel/path/to/model/source'
-      )
-    )
-  )
 
-  # Write the config file to the user's project.
+  # Save a project config file with placeholders for the user to start with.
+  config.unmarshal({
+    'training': {
+      'buildpack': train_buildpacks[0],
+      'train': 'mod1.mod2.train_func_name',
+      'test': 'mod1.mod2.test_func_name',
+      'eval': 'mod1.mod2.eval_func_name',
+      'model': {
+        'path': 'rel/path/to/model/dest',
+        'upload_criteria': 'always'
+      }
+    },
+    'hosting': {
+      'buildpack': api_buildpacks[0],
+      'predict': 'mod1.mod2.predict_func_name',
+      'model': {
+        'path': 'rel/path/to/model/source',
+      }
+    }
+  })
+
   config.save()
 
   log('Initialized new SweetTea project.\n' +
