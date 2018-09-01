@@ -3,7 +3,7 @@ import os
 
 class Config:
   """
-  Config class for storing any non-environment-variable config information
+  Internal config class for storing any non-environment-variable config information
   """
   def __init__(self):
     self.DEBUG = os.environ.get('DEBUG', True)

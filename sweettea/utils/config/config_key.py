@@ -36,6 +36,9 @@ class ConfigKey(object):
     self.validation = validation
     self.custom_validation = custom_validation
 
+  def unmarshal(self, val):
+    self.value = val
+
   def get_value(self):
     return self.value
 
@@ -105,17 +108,17 @@ class ConfigKey(object):
 
     try:
       # Ensure the provided module actually exists and can be imported
-      module = import_module(module_str)
+      mod = import_module(module_str)
     except KeyboardInterrupt:
       exit(0)
     except:
       return False
 
     # Module must actually exist and have function as attr
-    if not module or not hasattr(module, func_str):
+    if not mod or not hasattr(module, func_str):
       return False
 
-    func = getattr(module, func_str)
+    func = getattr(mod, func_str)
 
     # Ensure function is actually of type 'function'.
     # 'instancemethod' type is not supported as of now.
