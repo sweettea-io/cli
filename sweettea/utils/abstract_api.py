@@ -1,6 +1,5 @@
 import requests
 from tensorci import log
-from tensorci.definitions import tci_keep_alive
 
 
 class AbstractApi(object):
@@ -288,7 +287,7 @@ class AbstractApiResponse(object):
 
     log(err_msg)
 
-  def log_stream(self, chunk_size=10, lines_to_ignore=(tci_keep_alive)):
+  def log_stream(self, chunk_size=10, lines_to_ignore=('...')):
     """
     Log the streaming response by parsing and iterating over lines of the response.
 

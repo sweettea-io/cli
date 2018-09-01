@@ -1,11 +1,11 @@
 import click
-from tensorci.commands import all_cmds
+from sweettea.commands import all_cmds
 
 # Allow '-h' to be an alias of '--help'
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
-# 'tensorci' entrypoint
+# 'st' entrypoint
 @click.group(context_settings=CONTEXT_SETTINGS)
 def cli():
   pass

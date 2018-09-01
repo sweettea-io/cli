@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
-from tensorci.version import version
+from sweettea.version import version
 
-setup(name='tensorci',
+setup(name='sweettea',
       version=version,
-      description='TensorCI CLI',
+      description='SweetTea CLI',
       author='Ben Whittle',
-      author_email='benwhittle31@gmail.com',
+      author_email='ben@sweettea.io',
       license='MIT',
       packages=find_packages(),
       include_package_data=True,
@@ -21,5 +21,5 @@ setup(name='tensorci',
       ],
       entry_points='''
         [console_scripts]
-        tensorci=tensorci.main:cli
+        st=sweettea.main:cli
       ''')
