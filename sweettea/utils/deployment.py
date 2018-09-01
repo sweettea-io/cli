@@ -33,11 +33,11 @@ def deploy(action=None):
   if not config.is_valid():
     exit(1)
 
-  # Find this git project's remote url from inside .git/config
-  git_repo = gitconfig.get_remote_url()
+  # Find this git project's remote url namespace from inside .git/config
+  git_repo_nsp = gitconfig.get_remote_nsp()
 
   # Create deploy payload.
-  payload = {'git_url': git_repo}
+  payload = {'project_nsp': git_repo_nsp}
 
   # Perform the deployment with a streaming response.
   resp = api.post('/deployment/{}'.format(action), payload=payload, stream=True)

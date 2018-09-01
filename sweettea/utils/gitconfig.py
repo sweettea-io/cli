@@ -3,9 +3,11 @@ Utility for interacting with the git repo of the current working directory
 """
 import git
 import os
+from sweettea import log
+from urllib.parse import urlparse
 
 
-def get_remote_url(remote='origin', required=True):
+def get_remote_nsp(remote='origin', required=True):
   """
   Read the git url for the given remote from the .git/config
   file of the current working directory.
@@ -25,21 +27,20 @@ def get_remote_url(remote='origin', required=True):
 
   git_path = '{}/.git'.format(os.getcwd())
 
-  # Whether the cwd is a git repository or not
+  # Ensure cwd is a git repository.
   is_git_repo = os.path.exists(git_path) and os.path.isdir(git_path)
 
-  # Cwd needs to be a git repo...
   if not is_git_repo:
     return handle_not_found('Current project is not a git repository.')
 
-  config_path = '{}/config'.format(git_path)  # where the remote url should be found
+  # git config default path.
+  config_path = '{}/config'.format(git_path)
 
-  # Config file needs to exist...
   if not os.path.exists(config_path):
     return handle_not_found('.git/config file missing.')
 
   try:
-    # Parse the git config file
+    # Parse the git config file.
     config = git.GitConfigParser([config_path], read_only=True)
   except KeyboardInterrupt:
     exit(0)
@@ -54,7 +55,12 @@ def get_remote_url(remote='origin', required=True):
   except BaseException:
     return handle_not_found('Error determining remote origin url...make sure you have a git remote origin set up.')
 
-  if not url.endswith('.git'):
-    url += '.git'
+  # Split url into components.
+  url_comps = urlparse(str(url))
+  host = url_comps.netloc
+  path = url_comps.path
 
-  return str(url)
+  if path.endswith('.git'):
+    path = path[:-4]
+
+  return host + path

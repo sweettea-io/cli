@@ -30,16 +30,16 @@ def init():
     log('SweetTea project already exists for this directory.')
     return
 
-  # Find this git project's remote url from inside '.git/config'
-  git_repo = gitconfig.get_remote_url()
+  # Find this git project's remote url namespace from inside .git/config
+  git_repo_nsp = gitconfig.get_remote_nsp()
 
   try:
     # Register the git repository as a SweetTea project.
-    api.post('/project', payload={'nsp': git_repo})
+    api.post('/project', payload={'nsp': git_repo_nsp})
   except KeyboardInterrupt:
     return
 
-  # Save a project config file with placeholders for the user to start with.
+  # Unmarshal placeholder values into the SweetTea config file for the user to start with.
   config.unmarshal({
     'training': {
       'buildpack': train_buildpacks[0],
@@ -60,6 +60,7 @@ def init():
     }
   })
 
+  # Save the placeholder config file to disk.
   config.save()
 
   log('Initialized new SweetTea project.\n' +

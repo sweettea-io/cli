@@ -21,12 +21,12 @@ def logs(follow):
   # Must already be logged in to perform this command.
   auth_required()
 
-  # Find this git project's remote url from inside .git/config
-  git_repo = gitconfig.get_remote_url()
+  # Find this git project's remote url namespace from inside .git/config
+  git_repo_nsp = gitconfig.get_remote_nsp()
 
   # Built the payload.
   payload = {
-    'git_url': git_repo,
+    'project_nsp': git_repo_nsp,
     'follow': str(follow).lower()  # 'true' or 'false' --> will be converted into query param anyways
   }
 

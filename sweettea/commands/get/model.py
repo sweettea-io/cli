@@ -24,15 +24,15 @@ def model(output):
   # Must already be logged in to perform this command.
   auth_required()
 
-  # Find this git project's remote url from inside .git/config
-  git_repo = gitconfig.get_remote_url()
+  # Find this git project's remote url namespace from inside .git/config
+  git_repo_nsp = gitconfig.get_remote_nsp()
 
   # Build the payload.
-  payload = {'git_url': git_repo}
+  payload = {'project_nsp': git_repo_nsp}
 
   try:
     # Download the model file.
-    resp = api.get('/repo/model', payload=payload, stream=True)
+    resp = api.get('/model', payload=payload, stream=True)
   except KeyboardInterrupt:
     return
 
