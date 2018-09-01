@@ -36,13 +36,12 @@ class ConfigKey(object):
     self.validation = validation
     self.custom_validation = custom_validation
 
-  def set_value(self, val):
-    """Set the value for this key"""
-    self.value = val
+  def get_value(self):
+    return self.value
 
   def is_valid(self):
     """
-    Check if this class's 'value' attribute is valid
+    Check if this class's 'value' attribute is valid.
 
     :returns: Whether the value is considered "valid".
     :rtype: bool
@@ -64,32 +63,32 @@ class ConfigKey(object):
       self.validation = 'truthy'
 
     # Call the supported validator.
-    return getattr(self, '{}_validator'.format(self.validation))()
+    return getattr(self, '_{}_validator'.format(self.validation))()
 
   # --- Validators ---
 
-  def truthy_validator(self):
+  def _truthy_validator(self):
     """
     :return: Whether this class's 'value' attribute is "truthy".
     :rtype: bool
     """
     return bool(self.value)
 
-  def slug_validator(self):
+  def _slug_validator(self):
     """
     :return: Whether this class's 'value' attribute is equal to its slug counterpart.
     :rtype: bool
     """
     return self.value == to_slug(self.value)
 
-  def url_validator(self):
+  def _url_validator(self):
     """
     :return: Whether this class's 'value' attribute is a valid url.
     :rtype: bool
     """
     return is_valid_url(self.value)
 
-  def mod_function_validator(self):
+  def _mod_function_validator(self):
     """
     :return:
       Whether this class's 'value' attribute is a valid function path.

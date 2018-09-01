@@ -4,7 +4,12 @@ Helper methods related to files or their respective paths
 import os
 import shutil
 import zipfile
+from sweettea.definitions import config_file_name
 from sweettea import log
+
+
+def config_file_path():
+  return os.path.join(os.getcwd(), config_file_name)
 
 
 def create_model_save_path(path, download_ext):
