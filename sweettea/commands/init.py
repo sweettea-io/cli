@@ -22,22 +22,22 @@ def init():
 
   Ex: $ st init
   """
-  # # Must already be logged in to perform this command.
-  # auth_required()
-  #
-  # # If the current directory already has a config file, tell the user and exit.
-  # if os.path.exists(config_file_path()):
-  #   log('SweetTea project already exists for this directory.')
-  #   return
-  #
-  # # Find this git project's remote url namespace from inside .git/config
-  # git_repo_nsp = gitconfig.get_remote_nsp()
-  #
-  # try:
-  #   # Register the git repository as a SweetTea project.
-  #   api.post('/project', payload={'nsp': git_repo_nsp})
-  # except KeyboardInterrupt:
-  #   return
+  # Must already be logged in to perform this command.
+  auth_required()
+
+  # If the current directory already has a config file, tell the user and exit.
+  if os.path.exists(config_file_path()):
+    log('SweetTea project already exists for this directory.')
+    return
+
+  # Find this git project's remote url namespace from inside .git/config
+  git_repo_nsp = gitconfig.get_remote_nsp()
+
+  try:
+    # Register the git repository as a SweetTea project.
+    api.post('/project', payload={'nsp': git_repo_nsp})
+  except KeyboardInterrupt:
+    return
 
   # Unmarshal placeholder values into the SweetTea config file for the user to start with.
   config.unmarshal({

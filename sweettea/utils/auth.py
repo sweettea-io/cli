@@ -70,7 +70,7 @@ def get_creds():
 def auth_required():
   """Check if user is authed and exit if not"""
   if not authed():
-    log('You must be logged in to perfom that action.\n'
+    log('You must be logged in to perfom this action.\n'
         'Use \'st login\' if you already have an account, or message your '
-        'administrator to create an account for you on SweetTea.')
+        'admin to create a SweetTea account for you.')
     exit(1)
