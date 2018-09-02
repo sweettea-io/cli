@@ -32,8 +32,8 @@ config = ConfigFile(path=config_file_path(), config=ConfigMap(key_order=('traini
       'prepro': ConfigKey(validation='mod_function')
     }),
     'train': ConfigKey(required=True, validation='mod_function'),
-    'test': ConfigKey(required=True, validation='mod_function'),
-    'eval': ConfigKey(required=True, validation='mod_function'),
+    'test': ConfigKey(validation='mod_function'),
+    'eval': ConfigKey(validation='mod_function'),
     'model': ConfigMap(key_order=('path', 'upload_criteria'), value={
       'path': ConfigKey(required=True, custom_validation=validate_model_path),
       'upload_criteria': ConfigKey(required=True, custom_validation=validate_model_upload_criteria)
