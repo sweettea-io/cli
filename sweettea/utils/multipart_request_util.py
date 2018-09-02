@@ -1,5 +1,5 @@
 """
-Helper methods and classes related to multi-part file uploads or downloads
+Utility functions and classes related to multi-part file uploads or downloads
 """
 import os
 from clint.textui.progress import Bar as ProgressBar

@@ -2,11 +2,11 @@ import click
 import os
 from sweettea import log
 from sweettea.definitions import *
-from sweettea.helpers.file_helper import config_file_path
 from sweettea.proj_config import config
 from sweettea.utils import gitconfig
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
+from sweettea.utils.file_util import config_file_path
 
 
 @click.command()

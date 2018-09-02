@@ -1,6 +1,6 @@
 from importlib import import_module
-from sweettea.helpers.url_helper import is_valid_url
 from sweettea.utils.slug import to_slug
+from sweettea.utils.url_util import is_valid_url
 
 
 class ConfigKey(object):

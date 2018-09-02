@@ -1,8 +1,8 @@
 from sweettea.definitions import *
-from sweettea.helpers.file_helper import config_file_path
 from sweettea.utils.config.config_file import ConfigFile
 from sweettea.utils.config.config_key import ConfigKey
 from sweettea.utils.config.config_map import ConfigMap
+from sweettea.utils.file_util import config_file_path
 
 MODEL_UPLOAD_CRITERIA_ALWAYS = 'always'
 MODEL_UPLOAD_CRITERIA_EVAL = 'eval'
