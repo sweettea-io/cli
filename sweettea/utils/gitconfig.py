@@ -10,11 +10,15 @@ from urllib.parse import urlparse
 def get_remote_nsp(remote='origin', required=True):
   """
   Read the git url for the given remote from the .git/config
-  file of the current working directory.
+  file of the current working directory and return the combined host+path from
+  that url, without the .git extension if included in the path
+
+  Ex: If the git url is 'https://github.com/team/project.git',
+      the return value will be 'github.com/team/project'
 
   :param str remote: Git remote to look for
   :param bool required: Should the program exit if the url for this remote isn't found?
-  :return: The git url for the given remote
+  :return: The combined host+path of the discovered git url
   :rtype: str
   """
   # Handle case where git remote url isn't found. What to do depends
@@ -25,7 +29,8 @@ def get_remote_nsp(remote='origin', required=True):
     log(err)
     exit(1)
 
-  git_path = '{}/.git'.format(os.getcwd())
+  # Path to .git/ folder inside current working directory.
+  git_path = os.path.join(os.getcwd(), '.git')
 
   # Ensure cwd is a git repository.
   is_git_repo = os.path.exists(git_path) and os.path.isdir(git_path)
@@ -34,7 +39,7 @@ def get_remote_nsp(remote='origin', required=True):
     return handle_not_found('Current project is not a git repository.')
 
   # git config default path.
-  config_path = '{}/config'.format(git_path)
+  config_path = os.path.join(git_path, 'config')
 
   if not os.path.exists(config_path):
     return handle_not_found('.git/config file missing.')
