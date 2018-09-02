@@ -11,7 +11,7 @@ from sweettea.utils import gitconfig
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
 
-
+# TODO: Remove this file
 def deploy(action=None):
   """
   Perform a training deploy, API deploy, or both.

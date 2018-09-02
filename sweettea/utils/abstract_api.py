@@ -227,7 +227,7 @@ class AbstractApiResponse(object):
     self.status = response_obj.status_code
     self.ok = self.status in (200, 201)
 
-    # Don't parse json for successful streaming requests and multi-part uploads.
+    # Don't parse json for successful streaming or multi-part requests.
     if (self.stream or self.mp_upload) and self.ok:
       self.json = None
     else:
