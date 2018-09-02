@@ -9,7 +9,7 @@ from sweettea.utils.auth import auth_required
 @click.option('--follow', '-f', is_flag=True)
 def logs(follow):
   """
-  Show logs from the latest training session.
+  Show logs from the latest train job.
 
   Includes logs from preprocessing, training, and testing steps.
 
@@ -32,7 +32,7 @@ def logs(follow):
 
   try:
     # Get the logs for this deployment.
-    resp = api.get('/deployment/logs', payload=payload, stream=follow)
+    resp = api.get('/train_job/logs', payload=payload, stream=follow)
   except KeyboardInterrupt:
     return
 

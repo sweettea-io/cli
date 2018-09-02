@@ -7,8 +7,5 @@ venv/
 *.egg-info/
 dist/
 build/
-.tensorci.yml
-test.json
-data/
-bin/
+.sweettea.yml
 docs/build

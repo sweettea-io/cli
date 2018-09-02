@@ -3,7 +3,7 @@ import os
 from sweettea import log
 from sweettea.helpers.file_helper import create_model_save_path, upsert_parent_dirs, extract_in_place
 from sweettea.helpers.multipart_request_helper import ProgressDownloadStream
-from sweettea.proj_config.config_file import ConfigFile
+# from sweettea.proj_config.config_file import ConfigFile
 from sweettea.utils import gitconfig
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
@@ -43,11 +43,12 @@ def model(output):
     else:  # create abs path from cwd
       model_path = os.path.join(os.getcwd(), output)
   else:
+    model_path = None
     # Load our config file.
-    config = ConfigFile().load()
+    # config = ConfigFile().load()
 
     # Get the model file's absolute path based on cwd.
-    model_path = config.abs_model_path()
+    # model_path = config.abs_model_path()
 
   # Get the path where we should save the model.
   model_ext = resp.headers.get('Model-File-Type')

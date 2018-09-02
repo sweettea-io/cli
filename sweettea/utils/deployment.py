@@ -6,7 +6,7 @@ Utility file exposing a consolidated 'deploy' method used by the following comma
   $ tensorci push
 
 """
-from sweettea.proj_config.config_file import ConfigFile
+# from sweettea.proj_config.config_file import ConfigFile
 from sweettea.utils import gitconfig
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
@@ -26,12 +26,12 @@ def deploy(action=None):
   # Must already be logged in to perform this command.
   auth_required()
 
-  # Load config file from disk into our ConfigFile model.
-  config = ConfigFile().load()
-
-  # Return if config file not valid.
-  if not config.is_valid():
-    exit(1)
+  # # Load config file from disk into our ConfigFile model.
+  # config = ConfigFile().load()
+  #
+  # # Return if config file not valid.
+  # if not config.is_valid():
+  #   exit(1)
 
   # Find this git project's remote url namespace from inside .git/config
   git_repo_nsp = gitconfig.get_remote_nsp()
