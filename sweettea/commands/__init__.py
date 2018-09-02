@@ -2,6 +2,7 @@ from sweettea.commands.create import create
 from sweettea.commands.delete import delete
 from sweettea.commands.download import download
 from sweettea.commands.get import get
+from sweettea.commands.help import help
 from sweettea.commands.init import init
 from sweettea.commands.login import login
 from sweettea.commands.logout import logout
@@ -16,6 +17,7 @@ all_cmds = [
   delete,
   download,
   get,
+  help,
   init,
   login,
   logout,

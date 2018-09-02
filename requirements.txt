@@ -6,3 +6,4 @@ pyyaml==3.12
 gitpython==2.1.7
 clint==0.5.1
 twine
+wat-py
