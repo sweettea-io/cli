@@ -5,19 +5,22 @@ from sweettea.utils.deployment import deploy
 @click.command()
 def train():
   """
-  Train a model on the TensorCI cluster.
+  Train a model on the SweetTea Train Cluster.
 
-  The master branch of your current project's remote git repository is deployed
-  to the TensorCI training cluster, where the following functions specified in
-  .tensorci.yml are executed (in order):
+  The master branch of your current project's remote git repository will be deployed
+  to the SweetTea Train Cluster, where the following functions specified in
+  .sweettea.yml will be executed (in order):
 
-  (1) prepro_data: preprocess this project's dataset for training
-  (2) train: train a model
-  (3) test (only if provided): test the performance of that model
+  1. training.dataset.fetch (if provided)
+  2. training.dataset.prepro (if provided)
+  3. training.train
+  4. training.test (if provided)
+  5. training.eval (if provided)
 
-  Ex: tensorci train
+  Ex: st train
   """
   try:
-    deploy(action='train')
+    pass
+    # deploy(action='train')
   except KeyboardInterrupt:
     return

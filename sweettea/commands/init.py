@@ -32,7 +32,7 @@ def init():
   #
   # # Find this git project's remote url namespace from inside .git/config
   # git_repo_nsp = gitconfig.get_remote_nsp()
-  # 
+  #
   # try:
   #   # Register the git repository as a SweetTea project.
   #   api.post('/project', payload={'nsp': git_repo_nsp})
