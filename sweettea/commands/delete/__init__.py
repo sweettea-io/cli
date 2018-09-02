@@ -2,9 +2,9 @@ import click
 
 
 @click.group()
-def get():
+def delete():
   """
-  Get a SweetTea resource.
+  Delete a SweetTea resource.
 
   Currently supported resources:
 
@@ -12,4 +12,4 @@ def get():
   """
   pass
 
-# get.add_command(...)
+# delete.add_command(...)

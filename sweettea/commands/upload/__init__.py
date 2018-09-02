@@ -2,9 +2,9 @@ import click
 
 
 @click.group()
-def get():
+def upload():
   """
-  Get a SweetTea resource.
+  Upload a SweetTea resource.
 
   Currently supported resources:
 
@@ -12,4 +12,4 @@ def get():
   """
   pass
 
-# get.add_command(...)
+# upload.add_command(...)

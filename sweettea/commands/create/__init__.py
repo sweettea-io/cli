@@ -2,9 +2,9 @@ import click
 
 
 @click.group()
-def get():
+def create():
   """
-  Get a SweetTea resource.
+  Create a SweetTea resource.
 
   Currently supported resources:
 
@@ -12,4 +12,4 @@ def get():
   """
   pass
 
-# get.add_command(...)
+# create.add_command(...)
