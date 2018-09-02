@@ -43,6 +43,10 @@ def init():
   config.unmarshal({
     'training': {
       'buildpack': train_buildpacks[0],
+      'dataset': {
+        'fetch': 'mod1.mod2.fetch_dataset_func_name',
+        'prepro': 'mod1.mod2.preprocess_dataset_func_name'
+      },
       'train': 'mod1.mod2.train_func_name',
       'test': 'mod1.mod2.test_func_name',
       'eval': 'mod1.mod2.eval_func_name',
@@ -64,4 +68,4 @@ def init():
   config.save()
 
   log('Initialized new SweetTea project.\n' +
-      'Generated new config file at {}'.format(config.FILE_NAME))
+      'Generated new config file at {}'.format(config_file_name))
