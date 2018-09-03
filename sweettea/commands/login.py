@@ -56,6 +56,6 @@ def login(email, password):
   session_token = resp.headers.get(auth_header_name)
 
   # Create a new authed session in netrc with the session token as the password.
-  auth.create(password=session_token)
+  auth.create(login=email, password=session_token)
 
   log('Logged in as {}.'.format(email))

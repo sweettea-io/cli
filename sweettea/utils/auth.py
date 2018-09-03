@@ -7,17 +7,19 @@ from sweettea.config import config
 from tinynetrc import Netrc
 
 
-def create(password=None):
+def create(login=None, password=None):
   """
   Creates a new user session.
 
   Upserts a section to the netrc file, with the following specs:
     domain --> config.DOMAIN
-      password --> 'password' param
+      login    --> <SweetTea email>
+      password --> <SweetTea user session token>
 
   :param str password: Session token
   """
   netrc = Netrc()
+  netrc[config.DOMAIN]['login'] = login
   netrc[config.DOMAIN]['password'] = password
   netrc.save()
 

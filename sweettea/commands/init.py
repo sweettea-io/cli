@@ -19,7 +19,7 @@ def init():
   of a git repository.
 
   Upon success, a new config file named .sweettea.yml will be created in
-  the current working directory.s
+  the current working directory.
 
   Ex: $ st init
   """
