@@ -1,4 +1,5 @@
 import click
+import json
 from sweettea.definitions import default_model_name
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
@@ -37,7 +38,7 @@ def train(model, sha, env_file, env):
   payload = project_payload({
     'modelName': model,
     'sha': sha,
-    'envs': envs
+    'envs': json.dumps(envs)
   })
 
   try:

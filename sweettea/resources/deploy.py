@@ -1,4 +1,5 @@
 import click
+import json
 from sweettea.definitions import default_model_name
 from sweettea.utils.api import api
 from sweettea.utils.env_util import parse_cmd_envs
@@ -33,7 +34,7 @@ def create(name, cluster, model, sha, env_file, env):
     'apiCluster': cluster,
     'model': model,
     'sha': sha,
-    'envs': envs
+    'envs': json.dumps(envs)
   })
 
   try:
