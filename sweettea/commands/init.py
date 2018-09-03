@@ -3,10 +3,11 @@ import os
 from sweettea import log
 from sweettea.definitions import *
 from sweettea.proj_config import config
-from sweettea.utils import gitconfig
+from sweettea.utils import config_util
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
 from sweettea.utils.file_util import config_file_path
+from sweettea.utils.payload_util import project_payload
 
 
 @click.command()
@@ -18,7 +19,7 @@ def init():
   of a git repository.
 
   Upon success, a new config file named .sweettea.yml will be created in
-  the current working directory.
+  the current working directory.s
 
   Ex: $ st init
   """
@@ -30,41 +31,14 @@ def init():
     log('SweetTea project already exists for this directory.')
     return
 
-  # Find this git project's remote url namespace from inside .git/config
-  git_repo_nsp = gitconfig.get_remote_nsp()
-
   try:
     # Register the git repository as a SweetTea project.
-    api.post('/project', payload={'nsp': git_repo_nsp})
+    api.post('/project', payload=project_payload(key='nsp'))
   except KeyboardInterrupt:
     return
 
-  # Unmarshal placeholder values into the SweetTea config file for the user to start with.
-  config.unmarshal({
-    'training': {
-      'buildpack': train_buildpacks[0],
-      'dataset': {
-        'fetch': 'mod1.mod2:fetch_dataset_func_name',
-        'prepro': 'mod1.mod2:preprocess_dataset_func_name'
-      },
-      'train': 'mod1.mod2:train_func_name',
-      'test': 'mod1.mod2:test_func_name',
-      'eval': 'mod1.mod2:eval_func_name',
-      'model': {
-        'path': 'rel/path/to/model/dest',
-        'upload_criteria': 'always'
-      }
-    },
-    'hosting': {
-      'buildpack': api_buildpacks[0],
-      'predict': 'mod1.mod2:predict_func_name',
-      'model': {
-        'path': 'rel/path/to/model/source',
-      }
-    }
-  })
-
-  # Save the placeholder config file to disk.
+  # Unmarshal placeholder values into SweetTea config file for user to start with.
+  config_util.write_placeholders()
   config.save()
 
   log('Initialized new SweetTea project.\n' +

@@ -1,11 +1,48 @@
 """
 Utility methods related to files or their respective paths
 """
+import json
 import os
 import shutil
+import yaml
 import zipfile
 from sweettea.definitions import config_file_name
 from sweettea import log
+
+JSON_EXT = 'json'
+YAML_EXT = 'yaml'
+ENV_EXT = 'env'
+
+
+def is_json_file(path):
+  return path.endswith('.{}'.format(JSON_EXT))
+
+
+def is_yaml_file(path):
+  return path.endswith('.{}'.format(JSON_EXT))
+
+
+def is_env_file(path):
+  return path.endswith('.{}'.format(JSON_EXT))
+
+
+def file_ext(path):
+  comps = path.rsplit('/', 1).pop().rsplit('.', 1)
+
+  if len(comps) == 1:
+    return ''
+
+  return comps[1]
+
+
+def json_load(path):
+  with open(path) as f:
+    return json.load(f)
+
+
+def yaml_load(path):
+  with open(path) as f:
+    return yaml.load(f)
 
 
 def config_file_path():
