@@ -13,3 +13,5 @@ api_buildpacks = [
   'python-websocket-api',
   'python-json-api'
 ]
+
+default_model_name = 'default'

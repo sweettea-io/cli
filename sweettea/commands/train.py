@@ -1,4 +1,5 @@
 import click
+from sweettea.definitions import default_model_name
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
 from sweettea.utils.env_util import parse_cmd_envs
@@ -6,7 +7,7 @@ from sweettea.utils.payload_util import project_payload
 
 
 @click.command()
-@click.option('--model', '-m')
+@click.option('--model', '-m', default=default_model_name)
 @click.option('--sha')
 @click.option('--env-file')
 @click.option('--env', multiple=True)
