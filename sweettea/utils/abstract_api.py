@@ -1,5 +1,6 @@
 import requests
 from sweettea import log
+from sweettea.utils.type_util import to_str
 
 
 class AbstractApi(object):
@@ -287,7 +288,7 @@ class AbstractApiResponse(object):
 
     log(err_msg)
 
-  def log_stream(self, chunk_size=10, lines_to_ignore=('...')):
+  def log_stream(self, chunk_size=10, lines_to_ignore=('...',)):
     """
     Log the streaming response by parsing and iterating over lines of the response.
 
@@ -299,6 +300,8 @@ class AbstractApiResponse(object):
 
     try:
       for line in self.response_obj.iter_lines(chunk_size=chunk_size):
+        line = to_str(line)
+
         if not line or line in lines_to_ignore:
           continue
 

@@ -4,6 +4,7 @@ from sweettea.version import version
 setup(name='sweettea',
       version=version,
       description='SweetTea CLI',
+      url='https://github.com/sweettea-io/cli',
       author='Ben Whittle',
       author_email='ben@sweettea.io',
       license='MIT',
