@@ -25,7 +25,7 @@ def create_callback(encoder, completion_log=None):
   def callback(monitor):
     # If upload has completed...
     if monitor.bytes_read == encoder.len:
-      # Hack around that this callback is called twice when completed.
+      # Hacking around this callback being called twice when completed.
       if not hasattr(monitor, 'finished'):
         setattr(monitor, 'finished', True)
 

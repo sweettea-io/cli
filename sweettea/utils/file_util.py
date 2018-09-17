@@ -6,7 +6,7 @@ import os
 import shutil
 import yaml
 import zipfile
-from sweettea.definitions import config_file_name
+from sweettea.definitions import config_file_name, st_tmp_dir
 from sweettea import log
 
 JSON_EXT = 'json'
@@ -140,3 +140,32 @@ def extract_in_place(archive_path):
   os.remove(archive_path)
 
   return extract_dir
+
+
+def zip_dir(src_dir, dest_zip_file_path):
+  path = src_dir.rstrip('/') + '/'
+
+  if not os.path.exists(path):
+    log('No directory found at {}'.format(path))
+    exit(1)
+
+  os.makedirs(os.path.dirname(dest_zip_file_path), exist_ok=True)
+  zf = zipfile.ZipFile(dest_zip_file_path, 'w', zipfile.ZIP_DEFLATED)
+
+  try:
+    contents = os.walk(path)
+
+    for root, dirs, files in contents:
+      for dir_name in dirs:
+        dir_path = os.path.join(root, dir_name)
+        zf.write(dir_path, dir_path.replace(path, '', 1))
+
+      for file_name in files:
+        file_path = os.path.join(root, file_name)
+        zf.write(file_path, file_path.replace(path, '', 1))
+
+  except BaseException as e:
+    log('Error occurred while zipping directory: {}'.format(e))
+    exit(1)
+  finally:
+    zf.close()
