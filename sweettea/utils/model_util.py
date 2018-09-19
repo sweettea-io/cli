@@ -1,10 +1,10 @@
 import os
 from sweettea import log
 from sweettea.definitions import tmp_model_archive_path
-from sweettea.utils.file_util import zip_dir
+from sweettea.utils.file_utils import zip_dir
 
 
-def upload_ready_model_path(path):
+def get_upload_ready_model_path(path):
   # Ensure specified model path exists.
   if not os.path.exists(path):
     log('No model file or directory found at "{}".'.format(path))

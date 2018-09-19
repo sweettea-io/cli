@@ -1,12 +1,9 @@
 import click
-import os
-from sweettea import log
+from sweettea import log, proj_config
 from sweettea.definitions import *
-from sweettea.proj_config import config
 from sweettea.utils import config_util
 from sweettea.utils.api import api
 from sweettea.utils.auth import auth_required
-from sweettea.utils.file_util import config_file_path
 from sweettea.utils.payload_util import project_payload
 
 
@@ -27,7 +24,7 @@ def init():
   auth_required()
 
   # If the current directory already has a config file, tell the user and exit.
-  if os.path.exists(config_file_path()):
+  if os.path.exists(proj_config.file_path()):
     log('SweetTea project already exists for this directory.')
     return
 
@@ -39,7 +36,7 @@ def init():
 
   # Unmarshal placeholder values into SweetTea config file for user to start with.
   config_util.write_placeholders()
-  config.save()
+  proj_config.config.save()
 
   log('Initialized new SweetTea project.\n' +
       'Generated new config file at {}'.format(config_file_name))

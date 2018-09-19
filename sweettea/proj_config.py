@@ -2,10 +2,13 @@ from sweettea.definitions import *
 from sweettea.utils.config.config_file import ConfigFile
 from sweettea.utils.config.config_key import ConfigKey
 from sweettea.utils.config.config_map import ConfigMap
-from sweettea.utils.file_util import config_file_path
 
 MODEL_UPLOAD_CRITERIA_ALWAYS = 'always'
 MODEL_UPLOAD_CRITERIA_EVAL = 'eval'
+
+
+def file_path():
+  return os.path.join(os.getcwd(), config_file_name)
 
 
 def validate_training_bp(val):
@@ -24,7 +27,7 @@ def validate_model_upload_criteria(val):
   return val in {MODEL_UPLOAD_CRITERIA_ALWAYS, MODEL_UPLOAD_CRITERIA_EVAL}
 
 
-config = ConfigFile(path=config_file_path(), config=ConfigMap(key_order=('training', 'hosting'), value={
+config = ConfigFile(path=file_path(), config=ConfigMap(key_order=('training', 'hosting'), value={
   'training': ConfigMap(key_order=('buildpack', 'dataset', 'train', 'test', 'eval', 'model'), value={
     'buildpack': ConfigKey(required=True, custom_validation=validate_training_bp),
     'dataset': ConfigMap(key_order=('fetch', 'prepro'), value={

@@ -1,7 +1,8 @@
 import os
 import re
 from sweettea import log
-from sweettea.utils.file_util import *
+from sweettea.utils.file_utils \
+  import is_env_file, is_yaml_file, is_json_file, yaml_load, json_load, get_file_ext, JSON_EXT, YAML_EXT, ENV_EXT
 
 
 def parse_cmd_envs(env_file_path=None, env_options=None):
@@ -42,7 +43,7 @@ def env_dict_from_file(path):
   # UNSUPPORTED env file
   else:
     log('Unsupported env file type "{}". Supported file types are .{}, .{}, and .{}'.format(
-      file_ext(file_name_with_ext), JSON_EXT, YAML_EXT, ENV_EXT))
+      get_file_ext(file_name_with_ext), JSON_EXT, YAML_EXT, ENV_EXT))
     exit(1)
 
 
