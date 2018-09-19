@@ -1,14 +1,14 @@
+from .config_file import ConfigFile
+from .config_key import ConfigKey
+from .config_map import ConfigMap
 from sweettea.definitions import *
-from sweettea.utils.config.config_file import ConfigFile
-from sweettea.utils.config.config_key import ConfigKey
-from sweettea.utils.config.config_map import ConfigMap
 
 MODEL_UPLOAD_CRITERIA_ALWAYS = 'always'
 MODEL_UPLOAD_CRITERIA_EVAL = 'eval'
 
 
 def file_path():
-  return os.path.join(os.getcwd(), config_file_name)
+  return os.path.join(os.getcwd(), config_file_name)s
 
 
 def validate_training_bp(val):

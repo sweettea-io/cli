@@ -1,5 +1,5 @@
+from . import config
 from sweettea.definitions import *
-from sweettea.proj_config import config
 
 
 def write_placeholders():
@@ -26,3 +26,4 @@ def write_placeholders():
       }
     }
   })
+
